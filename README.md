@@ -110,6 +110,7 @@ A full guide to Pages.js is made avaialble at: [pagesjs.chrisdlangton.com][1]
 * *attr*: Sets an attribte to the selected element.
 * *append*: Append content to the inner-html of the selected element.
 * *prepend*: Prepend content to the inner-html of the selected element.
+* *goTo*: Scroll the screen into view of the selected element.
 
 ## Change Log
 
