@@ -121,10 +121,10 @@ A full guide to Pages.js is made avaialble at: [pagesjs.chrisdlangton.com][1]
 
 * .goTo() prototype method
 * document readystate fix
-* Version: 0.5 (Feb 05 2013)
 
-#### page() element class selector
+#### Version: 0.5 (Feb 05 2013)
 
+* page() element class selector
 * .getElementsByClassName fix
 * .forEach fix
 * .forEach() prototype method
