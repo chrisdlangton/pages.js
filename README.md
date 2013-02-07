@@ -1,9 +1,10 @@
+[logo]: https://raw.github.com/chrisdlangton/pages.js/master/logo.png "Pages.js Logo"
+[1]: http://pagesjs.chrisdlangton.com
+
 Pages.js JavaScript Micro-Framework
 ========
 
 ![Pages.js Logo][logo]
-
-[logo]: https://raw.github.com/chrisdlangton/pages.js/master/logo.png "Pages.js Logo"
 
 # What is Pages.js
 Pages.js is a small JavaScript Framework originally built as an experiment in designing single page applications. 
@@ -68,6 +69,9 @@ page('#main'); // returns nothing because there is no element with ID 'main'
 page('_about'); // returns the single element with the attribute value equal to 'about'
 page('.container'); // returns all three elements that have the class 'container'
 ```
+
+# Documentation
+A full guide to Pages.js is made avaialble at: [pagesjs.chrisdlangton.com][1]
 
 ### Methods available to a selected element that has the page attribute:
 * *nav*: Shifts the perspective to the defined page reference.
