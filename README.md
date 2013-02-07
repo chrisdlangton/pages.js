@@ -1,10 +1,13 @@
 [logo]: https://raw.github.com/chrisdlangton/pages.js/master/logo.png "Pages.js Logo"
 [1]: http://pagesjs.chrisdlangton.com
 
-Pages.js JavaScript Micro-Framework
+[Pages.js JavaScript Micro-Framework][1]
 ========
 
 ![Pages.js Logo][logo]
+
+# Official Website
+[pagesjs.chrisdlangton.com][1]
 
 # What is Pages.js
 Pages.js is a small JavaScript Framework originally built as an experiment in designing single page applications. 
