@@ -3,7 +3,7 @@
  *                      As Page.js evolved it aimed to solve the common problems associated with writing this new style of application. It became clear early on that Page.js was well suited for building simple single page applications without the requirement of heavier libraries such as jQuery to perform simple DOM related functions.
  *
  * @author  Christopher D. Langton chris@codewiz.biz
- * @version     0.5
+ * @version     0.6
  */
 //fixes for old browsers
 if (!document.getElementsByClassName) {
@@ -41,11 +41,11 @@ function page(id) {
     // About object is returned if there is no 'id' parameter
     var about = {
         Library: "Pages.js",
-        Version: 0.5,
+        Version: 0.6,
         Author: "Christopher D. Langton",
         Website: "http:\/\/chrisdlangton.com",
         Created: "2013-02-03",
-        Updated: "2013-02-06"
+        Updated: "2013-02-07"
     };
     if (id) {
         // return a new page object if we're in the window scope
@@ -477,6 +477,10 @@ page.prototype = {
             return false;
         }
     },
+	goTo: function () {
+		this.ele.scrollIntoView(true);
+		return this;
+	},
     // methods available to page selectors only
     nav: function () {
         if (typeof this.ele !== 'undefined' && this.ele !== null && this.ele.hasAttribute('page')) {
@@ -535,31 +539,36 @@ page.prototype = {
         }
     }
 };
-var hash = window.location.hash.substring(1);
-if (hash.length > 1) {
-    if (page('_' + hash).exist()) {
-        page('_' + hash).nav();
-    }
-}
-if ("onhashchange" in window) {
-    window.onhashchange = function () {
-        hash = window.location.hash.substring(1);
-        if (hash.length > 1) {
-            if (page('_' + hash).exist()) {
-                page('_' + hash).nav();
-            }
-        }
-    };
-} else {
-    var prevHash = window.location.hash;
-    window.setInterval(function () {
-        if (window.location.hash !== prevHash) {
-            hash = window.location.hash.substring(1);
-            if (hash.length > 1) {
-                if (page('_' + hash).exist()) {
-                    page('_' + hash).nav();
-                }
-            }
-        }
-    }, 100);
-};
+var readyStateCheckInterval = setInterval(function() {
+	if (document.readyState === "complete") {
+		var hash = window.location.hash.substring(1);
+		if (hash.length > 1) {
+			if (page('_' + hash).exist()) {
+				page('_' + hash).nav();
+			}
+		}
+		if ("onhashchange" in window) {
+			window.onhashchange = function () {
+				hash = window.location.hash.substring(1);
+				if (hash.length > 1) {
+					if (page('_' + hash).exist()) {
+						page('_' + hash).nav();
+					}
+				}
+			};
+		} else {
+			var prevHash = window.location.hash;
+			window.setInterval(function () {
+				if (window.location.hash !== prevHash) {
+					hash = window.location.hash.substring(1);
+					if (hash.length > 1) {
+						if (page('_' + hash).exist()) {
+							page('_' + hash).nav();
+						}
+					}
+				}
+			}, 500);
+		}
+		clearInterval(readyStateCheckInterval);
+	}
+}, 10);
