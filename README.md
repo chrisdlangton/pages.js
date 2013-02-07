@@ -45,9 +45,13 @@ Each 'page' element needs to be defined with the custom attribute 'page' with a 
 ```
 ## Basic Usage:
 As long as each page attribute is defined and Pages.js included, you can navigate to any one of these 'pages' using the hash in your url.
+
 tag_br space space
+
 For example type in http://myappdomain/#contact will show you the element with the page attribute equal to the hash value 'contact' and hide all other elements with a page attribute defined that do not equal the hash value 'contact', i.e. 'home' and 'about' will be hidden.
+
 tag_br space space
+
 Alternatively it is likely that your application will have a menu to navigate each page. Set the href for each anchor to the hash value, like so;
 ```html
 <a href="#home">Home</a>
@@ -56,12 +60,19 @@ Alternatively it is likely that your application will have a menu to navigate ea
 ```
 Then clicking each will navigate through the pages appropriately.
 ## Using the selector:
+
 The selector is similar to the jQuery implementation, where you can select by element ID or class name but also includes a selector for 'page' attribute value.
+
 * Hash ( # ) is used to select by ID. 
+
 * Period ( . ) is used to select by class name. 
+
 * Underscore ( _ ) is used to select by the page attribute value.
+
 _Note: the selector expects the ID and Page references to be unique and will therefore select only the first instance of the reference, where as the class name selector returns all element nodes matching the class name reference and you will then need to run them through the .forEach() method or one of the prototype methods that support multiple nodes in the selector._
+
 tag_br space space
+
 Examples:
 
 ```javascript
@@ -99,3 +110,56 @@ A full guide to Pages.js is made avaialble at: [pagesjs.chrisdlangton.com][1]
 * *attr*: Sets an attribte to the selected element.
 * *append*: Append content to the inner-html of the selected element.
 * *prepend*: Prepend content to the inner-html of the selected element.
+
+## Change Log
+
+#### Version: 0.6 Latest (Feb 07 2013)
+
+* .goTo() prototype method
+* document readystate fix
+* Version: 0.5 (Feb 05 2013)
+
+#### page() element class selector
+
+* .getElementsByClassName fix
+* .forEach fix
+* .forEach() prototype method
+* .trim() prototype method
+* .stringify() prototype method
+* .parse() prototype method
+* .append() prototype method
+* .prepend() prototype method
+
+#### Version: 0.4 (Jan 22 2013)
+
+* .disable() prototype method
+* .enable() prototype method
+* .remove() prototype method
+* .empty() prototype method
+* .html() prototype method
+* .val() prototype method
+
+#### Version: 0.3 (Jan 20 2013)
+
+* .indexOf fix
+* .exist() prototype method
+* .toggle() prototype method
+* .style() prototype method
+* .addClass() prototype method
+* .removeClass() prototype method
+
+#### Version: 0.2 (Jan 17 2013)
+
+* page() element page attribute selector
+* hash and page attribute controls
+* document readystate navigation for bookmarking
+* .attr() prototype method
+* .addPage() prototype method
+* .removePage() prototype method
+* .hide() prototype method
+* .show() prototype method
+
+#### Version: 0.1 (Jan 07 2013)
+ 
+* page() element id selector
+* .nav prototype method
