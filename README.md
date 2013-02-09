@@ -26,6 +26,12 @@ In the modern age of super-fast browsers and user expectations about the respons
 
 _Pages.js has no dependencies - It is a pure JavaScript Library._
 
+_Pages are navigatable using browser back and forward buttons._
+
+_Pages are bookmarkable._
+
+_Proper Google Analytics and ReInvigorate page tracking._
+
 Pages.js was originally built alongside Knockout.js as the only other JavaScript library present and therefore doesn't include any of the MVVM features or binding which would have overlapped with that particular library, but it does however share a lot of common functionality to jQuery which was not present in the experiment application but the functionality was required so I built it into Pages.js instead of having jQuery as a dependency.
 
 How to use Pages.js
@@ -128,8 +134,20 @@ A full guide to Pages.js is made avaialble at: [pagesjs.chrisdlangton.com][1]
 
 #### Version: 0.6 Latest (Feb 07 2013)
 
+* Google Analytics Page Visit Tracking
+* ReInvigorate Page Visit Tracking
+* Update page <title> to include (append) the hash value
+ 
+#### Version: 0.6 Latest (Feb 07 2013)
+
 * .goTo() prototype method
 * document readystate fix
+* String prototype capitalize
+* String prototype reverse
+* String prototype contains
+* String prototype ltrim
+* String prototype rtrim
+* String prototype trim
 
 #### Version: 0.5 (Feb 05 2013)
 
