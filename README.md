@@ -132,13 +132,13 @@ A full guide to Pages.js is made avaialble at: [pagesjs.chrisdlangton.com][1]
 
 ## Change Log
 
-#### Version: 0.6 Latest (Feb 07 2013)
+#### Version: 0.7 Latest (Feb 09 2013)
 
 * Google Analytics Page Visit Tracking
 * ReInvigorate Page Visit Tracking
 * Update page <title> to include (append) the hash value
  
-#### Version: 0.6 Latest (Feb 07 2013)
+#### Version: 0.6 (Feb 07 2013)
 
 * .goTo() prototype method
 * document readystate fix
