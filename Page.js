@@ -536,7 +536,7 @@ page.prototype = {
                 }
             }
 				// Update page Title
-				document.getElementsByTagName('title')[0].innerHTML = document.title.replace('<','&lt;').replace('>','&gt;').replace(' & ',' &amp; ') + " | " + this.id;
+				document.getElementsByTagName('title')[0].innerHTML = page_title + " | " + this.id;
 				// Inform Google Analytics of the change
 				if ( typeof window._gaq !== 'undefined' ) {
 					window._gaq.push(['_trackPageview','/#'+this.id]);
@@ -592,6 +592,7 @@ page.prototype = {
     }
 };
 var hash = window.location.hash.substring(1);
+var page_title = document.title.replace('<','&lt;').replace('>','&gt;').replace(' & ',' &amp; ');
 if (hash.length > 1) {
 	if (page('_' + hash).exist()) {
 		page('_' + hash).nav();
