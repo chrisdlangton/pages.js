@@ -3,8 +3,40 @@
  *                      As Page.js evolved it aimed to solve the common problems associated with writing this new style of application. It became clear early on that Page.js was well suited for building simple single page applications without the requirement of heavier libraries such as jQuery to perform simple DOM related functions.
  *
  * @author  Christopher D. Langton chris@codewiz.biz
- * @version     0.6
+ * @version     0.7
  */
+//useful string prototypes
+if (!String.prototype.capitalize) {
+	String.prototype.capitalize = function() {
+		return this.charAt(0).toUpperCase() + this.substring(1).toLowerCase();
+	};
+}
+if (!String.prototype.reverse) {
+	String.prototype.reverse = function () 
+	{
+		return this.split('').reverse().join('');
+	};
+}
+if (!String.prototype.contains) {
+	String.prototype.contains = function(value) {
+	 return this.indexOf(value) > -1;
+	};
+}
+if (!String.prototype.ltrim) {
+	String.prototype.ltrim = function () {
+		return this.replace(/^\s+/, '');
+	};
+}
+if (!String.prototype.rtrim) {
+	String.prototype.rtrim = function () {
+		return this.replace(/\s+$/, '');
+	};
+}
+if (!String.prototype.trim) {
+	String.prototype.trim = function () {
+		return this.ltrim().rtrim();
+	};
+}
 //fixes for old browsers
 if (!document.getElementsByClassName) {
     document.getElementsByClassName = function (classname) {
@@ -36,16 +68,25 @@ if (!Array.prototype.forEach) {
         }
     };
 }
+/* if (!Object.prototype.merge) {
+    Object.prototype.merge = function (obj) {
+		o1 = this;
+		for (var key in obj) {
+			o1[key] = obj[key];
+		}
+		return o1;
+    };
+} */
 //	page Object Constructor
 function page(id) {
     // About object is returned if there is no 'id' parameter
     var about = {
         Library: "Pages.js",
-        Version: 0.6,
+        Version: 0.7,
         Author: "Christopher D. Langton",
         Website: "http:\/\/chrisdlangton.com",
         Created: "2013-02-03",
-        Updated: "2013-02-07"
+        Updated: "2013-02-09"
     };
     if (id) {
         // return a new page object if we're in the window scope
@@ -494,7 +535,18 @@ page.prototype = {
                     }
                 }
             }
-            return this;
+				// Update page Title
+				document.getElementsByTagName('title')[0].innerHTML = document.title.replace('<','&lt;').replace('>','&gt;').replace(' & ',' &amp; ') + " | " + this.id;
+				// Inform Google Analytics of the change
+				if ( typeof window._gaq !== 'undefined' ) {
+					window._gaq.push(['_trackPageview','/#'+this.id]);
+				}
+				// Inform ReInvigorate of a state change
+				if ( typeof window.reinvigorate !== 'undefined' && typeof window.reinvigorate.ajax_track !== 'undefined' ) {
+					reinvigorate.ajax_track(window.location);
+					// ^ we use the full url here as that is what reinvigorate supports
+				}
+			return this;
         } else {
             console.log("Page.js: nav method only available for page selector");
             return false;
@@ -532,43 +584,38 @@ page.prototype = {
             }
         } else if (typeof this.ele !== 'undefined' && this.ele !== null) {
             if (this.ele.hasAttribute('page')) {
-                return this.ele.getAttribute('page') === this.id ? true : false;
+                return this.ele.getAttribute('page') === this.id ? this : false;
             } else {
                 return false;
             }
         }
     }
 };
-var readyStateCheckInterval = setInterval(function() {
-	if (document.readyState === "complete") {
-		var hash = window.location.hash.substring(1);
+var hash = window.location.hash.substring(1);
+if (hash.length > 1) {
+	if (page('_' + hash).exist()) {
+		page('_' + hash).nav();
+	}
+}
+if ("onhashchange" in window) {
+	window.onhashchange = function () {
+		hash = window.location.hash.substring(1);
 		if (hash.length > 1) {
 			if (page('_' + hash).exist()) {
 				page('_' + hash).nav();
 			}
 		}
-		if ("onhashchange" in window) {
-			window.onhashchange = function () {
-				hash = window.location.hash.substring(1);
-				if (hash.length > 1) {
-					if (page('_' + hash).exist()) {
-						page('_' + hash).nav();
-					}
+	};
+} else {
+	var prevHash = window.location.hash;
+	window.setInterval(function () {
+		if (window.location.hash !== prevHash) {
+			hash = window.location.hash.substring(1);
+			if (hash.length > 1) {
+				if (page('_' + hash).exist()) {
+					page('_' + hash).nav();
 				}
-			};
-		} else {
-			var prevHash = window.location.hash;
-			window.setInterval(function () {
-				if (window.location.hash !== prevHash) {
-					hash = window.location.hash.substring(1);
-					if (hash.length > 1) {
-						if (page('_' + hash).exist()) {
-							page('_' + hash).nav();
-						}
-					}
-				}
-			}, 500);
+			}
 		}
-		clearInterval(readyStateCheckInterval);
-	}
-}, 10);
+	}, 500);
+}
