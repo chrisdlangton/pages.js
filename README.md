@@ -66,7 +66,7 @@ Each 'page' element needs to be defined with the custom attribute 'page' with a 
 
 As long as each page attribute is defined and Pages.js included, you can navigate to any one of these 'pages' using the hash bang (#!) in your url.
 
-For example type in http://myappdomain/#contact will show you the element with the page attribute equal to the hash bang (#!) value 'contact' and hide all other elements with a page attribute defined that do not equal the hash bang (#!) value 'contact', i.e. 'home' and 'about' will be hidden.
+For example type in http://myappdomain/#!contact will show you the element with the page attribute equal to the hash bang (#!) value 'contact' and hide all other elements with a page attribute defined that do not equal the hash bang (#!) value 'contact', i.e. 'home' and 'about' will be hidden.
 
 Alternatively it is likely that your application will have a menu to navigate each page. Set the href for each anchor to the hash bang (#!) value, like so;
 
