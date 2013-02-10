@@ -48,7 +48,7 @@ Include the script in your html body after all the content (at the bottom of the
 <script src="javascripts/Pages.js/Pages.min.js" type="text/javascript" charset="utf-8"></script>
 ```
 
-Each 'page' element needs to be defined with the custom attribute 'page' with a value defined that will be used as the hash tag in your url for navigation.
+Each 'page' element needs to be defined with the custom attribute 'page' with a value defined that will be used as the hash bang (#!) tag in your url for navigation.
 
 ```html
 <div class="container" page="home">
@@ -64,16 +64,16 @@ Each 'page' element needs to be defined with the custom attribute 'page' with a 
 
 ## Basic Usage:
 
-As long as each page attribute is defined and Pages.js included, you can navigate to any one of these 'pages' using the hash in your url.
+As long as each page attribute is defined and Pages.js included, you can navigate to any one of these 'pages' using the hash bang (#!) in your url.
 
-For example type in http://myappdomain/#contact will show you the element with the page attribute equal to the hash value 'contact' and hide all other elements with a page attribute defined that do not equal the hash value 'contact', i.e. 'home' and 'about' will be hidden.
+For example type in http://myappdomain/#contact will show you the element with the page attribute equal to the hash bang (#!) value 'contact' and hide all other elements with a page attribute defined that do not equal the hash bang (#!) value 'contact', i.e. 'home' and 'about' will be hidden.
 
-Alternatively it is likely that your application will have a menu to navigate each page. Set the href for each anchor to the hash value, like so;
+Alternatively it is likely that your application will have a menu to navigate each page. Set the href for each anchor to the hash bang (#!) value, like so;
 
 ```html
-<a href="#home">Home</a>
-<a href="#about">About me</a>
-<a href="#contact">Contact me</a>
+<a href="#!home">Home</a>
+<a href="#!about">About me</a>
+<a href="#!contact">Contact me</a>
 ```
 
 Then clicking each will navigate through the pages appropriately.
@@ -131,6 +131,11 @@ A full guide to Pages.js is made avaialble at: [pagesjs.chrisdlangton.com][1]
 * *goTo*: Scroll the screen into view of the selected element.
 
 ## Change Log
+
+#### Version: 0.8 Latest (Feb 10 2013)
+
+* Canonical URL updating per Google Webmaster instructions
+* Hash bang (#!) URLs per Google Webmaster instructions
 
 #### Version: 0.7 Latest (Feb 09 2013)
 
