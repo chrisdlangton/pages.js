@@ -103,8 +103,8 @@ function page(id) {
             return new page(id);
         }
         // Init our element object and return the object
-        if (id.charAt(0) === '#') {
-            id = id.substring(1);
+        if (id.charAt(0) === '#!') {
+            id = id.substring(2);
             this.id = id;
             if (typeof (document.getElementById(id)) !== 'undefined' && document.getElementById(id) !== null) {
                 this.ele = document.getElementById(id);
@@ -550,12 +550,12 @@ page.prototype = {
 				var link_arr = document.getElementsByTagName("link");
 				for (var i = 0; i < link_arr.length; i++) {
 					if (link_arr[i].getAttribute('rel') == 'canonical') {
-						link_arr[i].href = canonical + "#" + this.id;
+						link_arr[i].href = canonical + "#!" + this.id;
 					}
 				}
 				// Inform Google Analytics of the change
 				if ( typeof window._gaq !== 'undefined' ) {
-					window._gaq.push(['_trackPageview','/#'+this.id]);
+					window._gaq.push(['_trackPageview','/#!'+this.id]);
 				}
 				// Inform ReInvigorate of a state change
 				if ( typeof window.reinvigorate !== 'undefined' && typeof window.reinvigorate.ajax_track !== 'undefined' ) {
