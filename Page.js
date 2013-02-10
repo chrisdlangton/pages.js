@@ -3,8 +3,17 @@
  *                      As Page.js evolved it aimed to solve the common problems associated with writing this new style of application. It became clear early on that Page.js was well suited for building simple single page applications without the requirement of heavier libraries such as jQuery to perform simple DOM related functions.
  *
  * @author  Christopher D. Langton chris@codewiz.biz
- * @version     0.7
+ * @version     0.8
  */
+//
+var hash = window.location.hash.substring(1);
+var page_title = document.title.replace('<','&lt;').replace('>','&gt;').replace(' & ',' &amp; ');
+var link_arr = document.getElementsByTagName("link");
+    for (var i = 0; i < link_arr.length; i++) {
+        if (link_arr[i].getAttribute('rel') == 'canonical') {
+            var canonical = link_arr[i].href;
+        }
+    }
 //useful string prototypes
 if (!String.prototype.capitalize) {
 	String.prototype.capitalize = function() {
@@ -82,11 +91,11 @@ function page(id) {
     // About object is returned if there is no 'id' parameter
     var about = {
         Library: "Pages.js",
-        Version: 0.7,
+        Version: 0.8,
         Author: "Christopher D. Langton",
         Website: "http:\/\/chrisdlangton.com",
         Created: "2013-02-03",
-        Updated: "2013-02-09"
+        Updated: "2013-02-10"
     };
     if (id) {
         // return a new page object if we're in the window scope
@@ -537,6 +546,13 @@ page.prototype = {
             }
 				// Update page Title
 				document.getElementsByTagName('title')[0].innerHTML = page_title + " | " + this.id;
+				// Update canonical
+				var link_arr = document.getElementsByTagName("link");
+				for (var i = 0; i < link_arr.length; i++) {
+					if (link_arr[i].getAttribute('rel') == 'canonical') {
+						link_arr[i].href = canonical + "#" + this.id;
+					}
+				}
 				// Inform Google Analytics of the change
 				if ( typeof window._gaq !== 'undefined' ) {
 					window._gaq.push(['_trackPageview','/#'+this.id]);
@@ -591,8 +607,6 @@ page.prototype = {
         }
     }
 };
-var hash = window.location.hash.substring(1);
-var page_title = document.title.replace('<','&lt;').replace('>','&gt;').replace(' & ',' &amp; ');
 if (hash.length > 1) {
 	if (page('_' + hash).exist()) {
 		page('_' + hash).nav();
