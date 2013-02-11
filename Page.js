@@ -3,49 +3,16 @@
  *                      As Page.js evolved it aimed to solve the common problems associated with writing this new style of application. It became clear early on that Page.js was well suited for building simple single page applications without the requirement of heavier libraries such as jQuery to perform simple DOM related functions.
  *
  * @author  Christopher D. Langton chris@codewiz.biz
- * @version     0.8
+ * @version     0.9
  */
-//
-var hash = window.location.hash.substring(1);
+var hash = window.location.hash.substring(2);
 var page_title = document.title.replace('<','&lt;').replace('>','&gt;').replace(' & ',' &amp; ');
 var link_arr = document.getElementsByTagName("link");
     for (var i = 0; i < link_arr.length; i++) {
-        if (link_arr[i].getAttribute('rel') == 'canonical') {
+        if (link_arr[i].getAttribute('rel') === 'canonical') {
             var canonical = link_arr[i].href;
         }
     }
-//useful string prototypes
-if (!String.prototype.capitalize) {
-	String.prototype.capitalize = function() {
-		return this.charAt(0).toUpperCase() + this.substring(1).toLowerCase();
-	};
-}
-if (!String.prototype.reverse) {
-	String.prototype.reverse = function () 
-	{
-		return this.split('').reverse().join('');
-	};
-}
-if (!String.prototype.contains) {
-	String.prototype.contains = function(value) {
-	 return this.indexOf(value) > -1;
-	};
-}
-if (!String.prototype.ltrim) {
-	String.prototype.ltrim = function () {
-		return this.replace(/^\s+/, '');
-	};
-}
-if (!String.prototype.rtrim) {
-	String.prototype.rtrim = function () {
-		return this.replace(/\s+$/, '');
-	};
-}
-if (!String.prototype.trim) {
-	String.prototype.trim = function () {
-		return this.ltrim().rtrim();
-	};
-}
 //fixes for old browsers
 if (!document.getElementsByClassName) {
     document.getElementsByClassName = function (classname) {
@@ -70,32 +37,16 @@ if (typeof Array.prototype.indexOf !== 'function') {
         return -1;
     };
 }
-if (!Array.prototype.forEach) {
-    Array.prototype.forEach = function (fn, scope) {
-        for (var i = 0, len = this.length; i < len; ++i) {
-            fn.call(scope, this[i], i, this);
-        }
-    };
-}
-/* if (!Object.prototype.merge) {
-    Object.prototype.merge = function (obj) {
-		o1 = this;
-		for (var key in obj) {
-			o1[key] = obj[key];
-		}
-		return o1;
-    };
-} */
 //	page Object Constructor
 function page(id) {
     // About object is returned if there is no 'id' parameter
     var about = {
         Library: "Pages.js",
-        Version: 0.8,
+        Version: 0.9,
         Author: "Christopher D. Langton",
         Website: "http:\/\/chrisdlangton.com",
         Created: "2013-02-03",
-        Updated: "2013-02-10"
+        Updated: "2013-02-11"
     };
     if (id) {
         // return a new page object if we're in the window scope
@@ -103,8 +54,8 @@ function page(id) {
             return new page(id);
         }
         // Init our element object and return the object
-        if (id.charAt(0) === '#!') {
-            id = id.substring(2);
+        if (id.charAt(0) === '#') {
+            id = id.substring(1);
             this.id = id;
             if (typeof (document.getElementById(id)) !== 'undefined' && document.getElementById(id) !== null) {
                 this.ele = document.getElementById(id);
@@ -216,6 +167,159 @@ page.prototype = {
                 return this.ele.value.replace(/^\s\s*/, '').replace(/\s\s*$/, '');
             } else if (typeof this.ele.innerHTML === "string") {
                 return this.ele.innerHTML.replace(/^\s\s*/, '').replace(/\s\s*$/, '');
+            } else {
+                return false;
+            }
+        } else {
+            return false;
+        }
+    },
+    ltrim: function () {
+        if (typeof this.ele !== 'undefined' && this.ele !== null) {
+            if (typeof this.ele[1] !== 'undefined' && this.ele[1] !== null) {
+                console.log('Page.js: method available for unique selectors only.');
+                return false;
+            }
+            if (typeof this.ele.value === "string") {
+                return this.ele.value.replace(/\s+$/, '');
+            } else if (typeof this.ele.innerHTML === "string") {
+                return this.ele.innerHTML.replace(/\s+$/, '');
+            } else {
+                return false;
+            }
+        } else {
+            return false;
+        }
+    },
+    rtrim: function () {
+        if (typeof this.ele !== 'undefined' && this.ele !== null) {
+            if (typeof this.ele[1] !== 'undefined' && this.ele[1] !== null) {
+                console.log('Page.js: method available for unique selectors only.');
+                return false;
+            }
+            if (typeof this.ele.value === "string") {
+                return this.ele.value.replace(/^\s+/, '');
+            } else if (typeof this.ele.innerHTML === "string") {
+                return this.ele.innerHTML.replace(/^\s+/, '');
+            } else {
+                return false;
+            }
+        } else {
+            return false;
+        }
+    },
+    clear: function (start, end) {
+        if (typeof this.ele !== 'undefined' && this.ele !== null) {
+            if (typeof this.ele[1] !== 'undefined' && this.ele[1] !== null) {
+                console.log('Page.js: method available for unique selectors only.');
+                return false;
+            }
+            if (typeof this.ele.value === "string") {
+                return this.ele.value.slice(0, start) + this.ele.value.slice(end);
+            } else if (typeof this.ele.innerHTML === "string") {
+                return this.ele.innerHTML.slice(0, start) + this.ele.value.slice(end);
+            } else {
+                return false;
+            }
+        } else {
+            return false;
+        }
+    },
+    contains: function (str) {
+        if (typeof this.ele !== 'undefined' && this.ele !== null) {
+            if (typeof this.ele[1] !== 'undefined' && this.ele[1] !== null) {
+                console.log('Page.js: method available for unique selectors only.');
+                return false;
+            }
+            if (typeof this.ele.value === "string") {
+                return this.ele.value.indexOf(str) > -1;
+            } else if (typeof this.ele.innerHTML === "string") {
+                return this.ele.innerHTML.indexOf(str) > -1;
+            } else {
+                return false;
+            }
+        } else {
+            return false;
+        }
+    },
+    reverse: function () {
+        if (typeof this.ele !== 'undefined' && this.ele !== null) {
+            if (typeof this.ele[1] !== 'undefined' && this.ele[1] !== null) {
+                console.log('Page.js: method available for unique selectors only.');
+                return false;
+            }
+            if (typeof this.ele.value === "string") {
+                return this.ele.value.split('').reverse().join('');
+            } else if (typeof this.ele.innerHTML === "string") {
+                return this.ele.innerHTML.split('').reverse().join('');
+            } else {
+                return false;
+            }
+        } else {
+            return false;
+        }
+    },
+    camelCase: function () {
+        if (typeof this.ele !== 'undefined' && this.ele !== null) {
+            if (typeof this.ele[1] !== 'undefined' && this.ele[1] !== null) {
+                console.log('Page.js: method available for unique selectors only.');
+                return false;
+            }
+            if (typeof this.ele.value === "string") {
+                return this.ele.value.replace(/\W+(.)/g, function(match, letter) {
+                    return letter.toUpperCase();
+                });
+            } else if (typeof this.ele.innerHTML === "string") {
+                return this.ele.innerHTML.replace(/\W+(.)/g, function(match, letter) {
+                    return letter.toUpperCase();
+                });
+            } else {
+                return false;
+            }
+        } else {
+            return false;
+        }
+    },
+    inverse: function () {
+        if (typeof this.ele !== 'undefined' && this.ele !== null) {
+            if (typeof this.ele[1] !== 'undefined' && this.ele[1] !== null) {
+                console.log('Page.js: method available for unique selectors only.');
+                return false;
+            }
+            if (typeof this.ele.value === "string") {
+                return this.ele.value.replace(/([a-z]+)|([A-Z]+)/g, function(match, lower, upper) {
+                    return lower ? match.toUpperCase() : match.toLowerCase();
+                });
+            } else if (typeof this.ele.innerHTML === "string") {
+                return this.ele.innerHTML.replace(/([a-z]+)|([A-Z]+)/g, function(match, lower, upper) {
+                    return lower ? match.toUpperCase() : match.toLowerCase();
+                });
+            } else {
+                return false;
+            }
+        } else {
+            return false;
+        }
+    },
+    capitalize: function (a) {
+        if (typeof a === 'undefined' && a === null) { var all = false; } else { var all = a; }
+        if (typeof this.ele !== 'undefined' && this.ele !== null) {
+            if (typeof this.ele[1] !== 'undefined' && this.ele[1] !== null) {
+                console.log('Page.js: method available for unique selectors only.');
+                return false;
+            }
+            if (typeof this.ele.value === "string") {
+                return all ? 
+                    this.ele.value.replace(/\w+/g, function(word) {
+                        return word.charAt(0).toUpperCase() + word.substring(1).toLowerCase();
+                    }) :
+                    this.ele.value.charAt(0).toUpperCase() + this.ele.value.substring(1).toLowerCase() ;
+            } else if (typeof this.ele.innerHTML === "string") {
+                return all ? 
+                this.ele.innerHTML.replace(/\w+/g, function(word) {
+                    return word.charAt(0).toUpperCase() + word.substring(1).toLowerCase();
+                }) :
+                this.ele.innerHTML.charAt(0).toUpperCase() + this.ele.innerHTML.substring(1).toLowerCase() ;
             } else {
                 return false;
             }
@@ -534,8 +638,8 @@ page.prototype = {
     // methods available to page selectors only
     nav: function () {
         if (typeof this.ele !== 'undefined' && this.ele !== null && this.ele.hasAttribute('page')) {
-            var elements = document.getElementsByTagName('*');
-            for (var i = 0; i < elements.length; i++) {
+            var elements = document.getElementsByTagName('*'); var i = 0;
+            for (i = 0; i < elements.length; i++) {
                 if (elements[i].getAttribute('page')) {
                     if (elements[i].getAttribute('page') === this.id) {
                         elements[i].style.display = 'inherit';
@@ -548,8 +652,8 @@ page.prototype = {
 				document.getElementsByTagName('title')[0].innerHTML = page_title + " | " + this.id;
 				// Update canonical
 				var link_arr = document.getElementsByTagName("link");
-				for (var i = 0; i < link_arr.length; i++) {
-					if (link_arr[i].getAttribute('rel') == 'canonical') {
+				for (i = 0; i < link_arr.length; i++) {
+					if (link_arr[i].getAttribute('rel') === 'canonical') {
 						link_arr[i].href = canonical + "#!" + this.id;
 					}
 				}
@@ -614,7 +718,7 @@ if (hash.length > 1) {
 }
 if ("onhashchange" in window) {
 	window.onhashchange = function () {
-		hash = window.location.hash.substring(1);
+		hash = window.location.hash.substring(2);
 		if (hash.length > 1) {
 			if (page('_' + hash).exist()) {
 				page('_' + hash).nav();
@@ -625,7 +729,7 @@ if ("onhashchange" in window) {
 	var prevHash = window.location.hash;
 	window.setInterval(function () {
 		if (window.location.hash !== prevHash) {
-			hash = window.location.hash.substring(1);
+			hash = window.location.hash.substring(2);
 			if (hash.length > 1) {
 				if (page('_' + hash).exist()) {
 					page('_' + hash).nav();
