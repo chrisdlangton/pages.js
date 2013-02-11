@@ -132,12 +132,24 @@ A full guide to Pages.js is made avaialble at: [pagesjs.chrisdlangton.com][1]
 
 ## Change Log
 
-#### Version: 0.8 Latest (Feb 10 2013)
+#### Version: 0.9 Latest (Feb 11 2013)
+
+* slight code restructure removing redundant components
+* .capitalize() prototype method
+* .inverse() prototype method
+* .reverse() prototype method
+* .contains() prototype method
+* .clear() prototype method
+* .camelCase() prototype method
+* .ltrim() prototype method
+* .rtrim() prototype method
+
+#### Version: 0.8 (Feb 10 2013)
 
 * Canonical URL updating per Google Webmaster instructions
 * Hash bang (#!) URLs per Google Webmaster instructions
 
-#### Version: 0.7 Latest (Feb 09 2013)
+#### Version: 0.7 (Feb 09 2013)
 
 * Google Analytics Page Visit Tracking
 * ReInvigorate Page Visit Tracking
@@ -147,12 +159,6 @@ A full guide to Pages.js is made avaialble at: [pagesjs.chrisdlangton.com][1]
 
 * .goTo() prototype method
 * document readystate fix
-* String prototype capitalize
-* String prototype reverse
-* String prototype contains
-* String prototype ltrim
-* String prototype rtrim
-* String prototype trim
 
 #### Version: 0.5 (Feb 05 2013)
 
