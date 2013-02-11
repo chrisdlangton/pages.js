@@ -6,13 +6,13 @@
  * @version     0.9
  */
 var hash = window.location.hash.substring(2);
-var page_title = document.title.replace('<','&lt;').replace('>','&gt;').replace(' & ',' &amp; ');
+var page_title = document.title.replace('<', '&lt;').replace('>', '&gt;').replace(' & ', ' &amp; ');
 var link_arr = document.getElementsByTagName("link");
-    for (var i = 0; i < link_arr.length; i++) {
-        if (link_arr[i].getAttribute('rel') === 'canonical') {
-            var canonical = link_arr[i].href;
-        }
+for (var i = 0; i < link_arr.length; i++) {
+    if (link_arr[i].getAttribute('rel') === 'canonical') {
+        var canonical = link_arr[i].href;
     }
+}
 //fixes for old browsers
 if (!document.getElementsByClassName) {
     document.getElementsByClassName = function (classname) {
@@ -215,9 +215,13 @@ page.prototype = {
                 return false;
             }
             if (typeof this.ele.value === "string") {
-                return this.ele.value.slice(0, start) + this.ele.value.slice(end);
+                var index1 = this.ele.value.indexOf(start);
+                var index2 = this.ele.value.indexOf(end);
+                return this.ele.value.slice(0, index1) + this.ele.value.slice(index2 + 1);
             } else if (typeof this.ele.innerHTML === "string") {
-                return this.ele.innerHTML.slice(0, start) + this.ele.value.slice(end);
+                var index1 = this.ele.innerHTML.indexOf(start);
+                var index2 = this.ele.innerHTML.indexOf(end);
+                return this.ele.innerHTML.slice(0, index1) + this.ele.innerHTML.slice(index2 + 1);
             } else {
                 return false;
             }
@@ -266,11 +270,11 @@ page.prototype = {
                 return false;
             }
             if (typeof this.ele.value === "string") {
-                return this.ele.value.replace(/\W+(.)/g, function(match, letter) {
+                return this.ele.value.replace(/\W+(.)/g, function (match, letter) {
                     return letter.toUpperCase();
                 });
             } else if (typeof this.ele.innerHTML === "string") {
-                return this.ele.innerHTML.replace(/\W+(.)/g, function(match, letter) {
+                return this.ele.innerHTML.replace(/\W+(.)/g, function (match, letter) {
                     return letter.toUpperCase();
                 });
             } else {
@@ -287,11 +291,11 @@ page.prototype = {
                 return false;
             }
             if (typeof this.ele.value === "string") {
-                return this.ele.value.replace(/([a-z]+)|([A-Z]+)/g, function(match, lower, upper) {
+                return this.ele.value.replace(/([a-z]+)|([A-Z]+)/g, function (match, lower, upper) {
                     return lower ? match.toUpperCase() : match.toLowerCase();
                 });
             } else if (typeof this.ele.innerHTML === "string") {
-                return this.ele.innerHTML.replace(/([a-z]+)|([A-Z]+)/g, function(match, lower, upper) {
+                return this.ele.innerHTML.replace(/([a-z]+)|([A-Z]+)/g, function (match, lower, upper) {
                     return lower ? match.toUpperCase() : match.toLowerCase();
                 });
             } else {
@@ -302,24 +306,24 @@ page.prototype = {
         }
     },
     capitalize: function (a) {
-        if (typeof a === 'undefined' && a === null) { var all = false; } else { var all = a; }
+        if (typeof a === 'undefined' && a === null) {
+            var all = false;
+        } else {
+            var all = a;
+        }
         if (typeof this.ele !== 'undefined' && this.ele !== null) {
             if (typeof this.ele[1] !== 'undefined' && this.ele[1] !== null) {
                 console.log('Page.js: method available for unique selectors only.');
                 return false;
             }
             if (typeof this.ele.value === "string") {
-                return all ? 
-                    this.ele.value.replace(/\w+/g, function(word) {
-                        return word.charAt(0).toUpperCase() + word.substring(1).toLowerCase();
-                    }) :
-                    this.ele.value.charAt(0).toUpperCase() + this.ele.value.substring(1).toLowerCase() ;
-            } else if (typeof this.ele.innerHTML === "string") {
-                return all ? 
-                this.ele.innerHTML.replace(/\w+/g, function(word) {
+                return all ? this.ele.value.replace(/\w+/g, function (word) {
                     return word.charAt(0).toUpperCase() + word.substring(1).toLowerCase();
-                }) :
-                this.ele.innerHTML.charAt(0).toUpperCase() + this.ele.innerHTML.substring(1).toLowerCase() ;
+                }) : this.ele.value.charAt(0).toUpperCase() + this.ele.value.substring(1).toLowerCase();
+            } else if (typeof this.ele.innerHTML === "string") {
+                return all ? this.ele.innerHTML.replace(/\w+/g, function (word) {
+                    return word.charAt(0).toUpperCase() + word.substring(1).toLowerCase();
+                }) : this.ele.innerHTML.charAt(0).toUpperCase() + this.ele.innerHTML.substring(1).toLowerCase();
             } else {
                 return false;
             }
@@ -431,30 +435,30 @@ page.prototype = {
             return false;
         }
         var data = "";
-		if ((this.ele.tagName && this.ele.tagName.toLowerCase() === "textarea") || (this.ele.tagName && this.ele.tagName.toLowerCase() === "input" && this.ele.type.toLowerCase() === "text")) {
-			if (typeof this.ele.value === "string" && this.ele.value !== null) {
-				data = this.ele.value.replace(/^\s\s*/, '').replace(/\s\s*$/, '');
-				if (window.JSON && window.JSON.parse) {
-					return window.JSON.parse(data);
-				} else {
-					console.log('Page.js: browser doesnt support json natively');
-					return false;
-				}
-			} else {
-				console.log('Page.js: parse accepts a string');
-				return false;
-			}
-		} else {
-			if (typeof this.ele.innerHTML === "string" && this.ele.innerHTML !== null) {
-				data = this.ele.innerHTML.replace(/^\s\s*/, '').replace(/\s\s*$/, '');
-				if (window.JSON && window.JSON.parse) {
-					return window.JSON.parse(data);
-				} else {
-					console.log('Page.js: browser doesnt support json natively');
-					return false;
-				}
-			}			
-		}
+        if ((this.ele.tagName && this.ele.tagName.toLowerCase() === "textarea") || (this.ele.tagName && this.ele.tagName.toLowerCase() === "input" && this.ele.type.toLowerCase() === "text")) {
+            if (typeof this.ele.value === "string" && this.ele.value !== null) {
+                data = this.ele.value.replace(/^\s\s*/, '').replace(/\s\s*$/, '');
+                if (window.JSON && window.JSON.parse) {
+                    return window.JSON.parse(data);
+                } else {
+                    console.log('Page.js: browser doesnt support json natively');
+                    return false;
+                }
+            } else {
+                console.log('Page.js: parse accepts a string');
+                return false;
+            }
+        } else {
+            if (typeof this.ele.innerHTML === "string" && this.ele.innerHTML !== null) {
+                data = this.ele.innerHTML.replace(/^\s\s*/, '').replace(/\s\s*$/, '');
+                if (window.JSON && window.JSON.parse) {
+                    return window.JSON.parse(data);
+                } else {
+                    console.log('Page.js: browser doesnt support json natively');
+                    return false;
+                }
+            }
+        }
     },
     html: function (replacement) {
         if (typeof this.ele !== 'undefined' && this.ele !== null) {
@@ -478,17 +482,17 @@ page.prototype = {
                 console.log('Page.js: method available for unique selectors only.');
                 return false;
             }
-			if (this.ele.tagName && this.ele.tagName.toLowerCase() === "input") {
-				if (typeof replacement === "undefined") {
-					return this.ele.value;
-				} else {
-					this.ele.value = replacement;
-					return this;
-				}
-			} else {
-				console.log('Page.js: method available for input selectors only.');
-                return false;				
-			}
+            if (this.ele.tagName && this.ele.tagName.toLowerCase() === "input") {
+                if (typeof replacement === "undefined") {
+                    return this.ele.value;
+                } else {
+                    this.ele.value = replacement;
+                    return this;
+                }
+            } else {
+                console.log('Page.js: method available for input selectors only.');
+                return false;
+            }
         } else {
             return false;
         }
@@ -515,8 +519,8 @@ page.prototype = {
                 console.log('Page.js: method available for unique selectors only.');
                 return false;
             }
-			(elem = this.ele).parentNode.removeChild(elem);
-			return this;
+            (elem = this.ele).parentNode.removeChild(elem);
+            return this;
         } else {
             return false;
         }
@@ -631,14 +635,15 @@ page.prototype = {
             return false;
         }
     },
-	goTo: function () {
-		this.ele.scrollIntoView(true);
-		return this;
-	},
+    goTo: function () {
+        this.ele.scrollIntoView(true);
+        return this;
+    },
     // methods available to page selectors only
     nav: function () {
         if (typeof this.ele !== 'undefined' && this.ele !== null && this.ele.hasAttribute('page')) {
-            var elements = document.getElementsByTagName('*'); var i = 0;
+            var elements = document.getElementsByTagName('*');
+            var i = 0;
             for (i = 0; i < elements.length; i++) {
                 if (elements[i].getAttribute('page')) {
                     if (elements[i].getAttribute('page') === this.id) {
@@ -648,25 +653,25 @@ page.prototype = {
                     }
                 }
             }
-				// Update page Title
-				document.getElementsByTagName('title')[0].innerHTML = page_title + " | " + this.id;
-				// Update canonical
-				var link_arr = document.getElementsByTagName("link");
-				for (i = 0; i < link_arr.length; i++) {
-					if (link_arr[i].getAttribute('rel') === 'canonical') {
-						link_arr[i].href = canonical + "#!" + this.id;
-					}
-				}
-				// Inform Google Analytics of the change
-				if ( typeof window._gaq !== 'undefined' ) {
-					window._gaq.push(['_trackPageview','/#!'+this.id]);
-				}
-				// Inform ReInvigorate of a state change
-				if ( typeof window.reinvigorate !== 'undefined' && typeof window.reinvigorate.ajax_track !== 'undefined' ) {
-					reinvigorate.ajax_track(window.location);
-					// ^ we use the full url here as that is what reinvigorate supports
-				}
-			return this;
+            // Update page Title
+            document.getElementsByTagName('title')[0].innerHTML = page_title + " | " + this.id;
+            // Update canonical
+            var link_arr = document.getElementsByTagName("link");
+            for (i = 0; i < link_arr.length; i++) {
+                if (link_arr[i].getAttribute('rel') === 'canonical') {
+                    link_arr[i].href = canonical + "#!" + this.id;
+                }
+            }
+            // Inform Google Analytics of the change
+            if (typeof window._gaq !== 'undefined') {
+                window._gaq.push(['_trackPageview', '/#!' + this.id]);
+            }
+            // Inform ReInvigorate of a state change
+            if (typeof window.reinvigorate !== 'undefined' && typeof window.reinvigorate.ajax_track !== 'undefined') {
+                reinvigorate.ajax_track(window.location);
+                // ^ we use the full url here as that is what reinvigorate supports
+            }
+            return this;
         } else {
             console.log("Page.js: nav method only available for page selector");
             return false;
@@ -712,29 +717,29 @@ page.prototype = {
     }
 };
 if (hash.length > 1) {
-	if (page('_' + hash).exist()) {
-		page('_' + hash).nav();
-	}
+    if (page('_' + hash).exist()) {
+        page('_' + hash).nav();
+    }
 }
 if ("onhashchange" in window) {
-	window.onhashchange = function () {
-		hash = window.location.hash.substring(2);
-		if (hash.length > 1) {
-			if (page('_' + hash).exist()) {
-				page('_' + hash).nav();
-			}
-		}
-	};
+    window.onhashchange = function () {
+        hash = window.location.hash.substring(2);
+        if (hash.length > 1) {
+            if (page('_' + hash).exist()) {
+                page('_' + hash).nav();
+            }
+        }
+    };
 } else {
-	var prevHash = window.location.hash;
-	window.setInterval(function () {
-		if (window.location.hash !== prevHash) {
-			hash = window.location.hash.substring(2);
-			if (hash.length > 1) {
-				if (page('_' + hash).exist()) {
-					page('_' + hash).nav();
-				}
-			}
-		}
-	}, 500);
+    var prevHash = window.location.hash;
+    window.setInterval(function () {
+        if (window.location.hash !== prevHash) {
+            hash = window.location.hash.substring(2);
+            if (hash.length > 1) {
+                if (page('_' + hash).exist()) {
+                    page('_' + hash).nav();
+                }
+            }
+        }
+    }, 500);
 }
