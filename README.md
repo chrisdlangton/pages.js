@@ -34,7 +34,9 @@ _Proper Google Analytics and ReInvigorate page tracking._
 
 Pages.js was originally built alongside Knockout.js as the only other JavaScript library present and therefore doesn't include any of the MVVM features or binding which would have overlapped with that particular library, but it does however share a lot of common functionality to jQuery which was not present in the experiment application but the functionality was required so I built it into Pages.js instead of having jQuery as a dependency.
 
-How to use Pages.js
+# How does it work?
+
+Pages.js will listen for the browser onhashchange event if it is supported (FF3.6+, IE8+, Chrome 5+, Safari 5+, Opera 10.6+) or it will fallback to pooling the window.location on an interval to check if hash value changed. 
 
 # How to use Pages.js
 
