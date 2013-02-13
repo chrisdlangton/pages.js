@@ -44,7 +44,7 @@ function page(id) {
         Library: "Pages.js",
         Version: "RC2",
         Author: "Christopher D. Langton",
-        Website: "http:\/\/chrisdlangton.com",
+        Website: "http:\/\/pagesjs.chrisdlangton.com",
         Created: "2013-02-03",
         Updated: "2013-02-13"
     };
