@@ -3,7 +3,7 @@
  *                      As Page.js evolved it aimed to solve the common problems associated with writing this new style of application. It became clear early on that Page.js was well suited for building simple single page applications without the requirement of heavier libraries such as jQuery to perform simple DOM related functions.
  *
  * @author  Christopher D. Langton chris@codewiz.biz
- * @version     1 Beta RC1
+ * @version     1 Beta RC2
  */
 //fixes for old browsers
 if (!document.getElementsByClassName) {
@@ -29,24 +29,24 @@ if (typeof Array.prototype.indexOf !== 'function') {
         return -1;
     };
 }
-//  page Object Constructor
+//	page Object Constructor
 function page(id) {
     this.hash = window.location.hash.substring(2);
     this.page_title = document.title.replace('<', '&lt;').replace('>', '&gt;').replace(' & ', ' &amp; ').substring(0, document.title.replace('<', '&lt;').replace('>', '&gt;').replace(' & ', ' &amp; ').indexOf(" |") ) || document.title.replace('<', '&lt;').replace('>', '&gt;').replace(' & ', ' &amp; ');
     var link_arr = document.getElementsByTagName("link");
     for (var i = 0; i < link_arr.length; i++) {
         if (link_arr[i].getAttribute('rel') === 'canonical') {
-            this.canonical = link_arr[i].href.substring(0, link_arr[i].href.indexOf("#!") );
+            this.canonical = link_arr[i].href.substring(0, link_arr[i].href.indexOf("#!") ) || link_arr[i].href;
         }
     }
     // About object is returned if there is no 'id' parameter
     var about = {
         Library: "Pages.js",
-        Version: 1,
+        Version: "RC2",
         Author: "Christopher D. Langton",
         Website: "http:\/\/chrisdlangton.com",
         Created: "2013-02-03",
-        Updated: "2013-02-12"
+        Updated: "2013-02-13"
     };
     if (id) {
         // return a new page object if we're in the window scope
@@ -102,6 +102,9 @@ function page(id) {
 //	Page.js prototype methods
 page.prototype = {
     init: function () {
+        window.meta = {
+            title: document.title.replace('<', '&lt;').replace('>', '&gt;').replace(' & ', ' &amp; ')
+        }
         if (this.hash.length > 1) {
             if (page('_' + this.hash).exist()) {
                 page('_' + this.hash).nav();
@@ -671,7 +674,8 @@ page.prototype = {
         return this;
     },
     // methods available to page selectors only
-    nav: function () {
+    nav: function (obj) {
+        //navigate
         if (typeof this.ele !== 'undefined' && this.ele !== null && this.ele.hasAttribute('page')) {
             var elements = document.getElementsByTagName('*');
             var i = 0;
@@ -684,8 +688,16 @@ page.prototype = {
                     }
                 }
             }
-            // Update page Title
-            document.getElementsByTagName('title')[0].innerHTML = this.page_title + " | " + this.id;
+            // update Title
+            if ( typeof obj === 'object' && typeof obj.title !== 'undefined' ) {
+                document.getElementsByTagName('title')[0].innerHTML = obj.title;
+            } else {
+                if (typeof window.meta === 'object' && typeof window.meta.title !== 'undefined') {
+                    document.title = window.meta.title + " | " + this.id;
+                } else { 
+                    document.title = this.page_title + " | " + this.id;
+                }
+            }
             // Update canonical
             var link_arr = document.getElementsByTagName("link");
             for (i = 0; i < link_arr.length; i++) {
