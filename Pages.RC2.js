@@ -673,7 +673,49 @@ page.prototype = {
         this.ele.scrollIntoView(true);
         return this;
     },
+    addPage: function (value) {
+        if (typeof this.ele !== 'undefined' && this.ele !== null) {
+            if (this.ele.hasAttribute('page')) {
+                console.log("Page.js: page already exists as '" + this.ele.getAttribute('page') + "'");
+                return false;
+            } else {
+                this.ele.setAttribute("page", value);
+                return this;
+            }
+        } else {
+            console.log("Page.js: invalid selector");
+            return false;
+        }
+    },
+    exist: function (value) {
+        if (typeof this.ele !== 'undefined' && this.ele !== null && typeof value !== 'undefined' && value !== null) {
+            if (this.ele.hasAttribute('page')) {
+                return this.ele.getAttribute('page') === value ? true : false;
+            } else {
+                return false;
+            }
+        } else if (typeof this.ele !== 'undefined' && this.ele !== null) {
+            if (this.ele.hasAttribute('page')) {
+                return this.ele.getAttribute('page') === this.id ? this : false;
+            } else {
+                return false;
+            }
+        }
+    },
     // methods available to page selectors only
+    title: function (value) {
+        if (typeof this.ele !== 'undefined' && this.ele !== null && this.ele.hasAttribute('page')) {
+            if (typeof value === 'undefined') {
+                return this.ele.getAttribute('page-title');
+            } else {
+                this.ele.setAttribute("page-title", value);
+                return this;
+            }
+        } else {
+            console.log("Page.js: pageTitle method only available for page selector");
+            return false;
+        }
+    },
     nav: function (obj) {
         //navigate
         if (typeof this.ele !== 'undefined' && this.ele !== null && this.ele.hasAttribute('page')) {
@@ -689,13 +731,21 @@ page.prototype = {
                 }
             }
             // update Title
+            // was a title given
             if ( typeof obj === 'object' && typeof obj.title !== 'undefined' ) {
                 document.getElementsByTagName('title')[0].innerHTML = obj.title;
             } else {
-                if (typeof window.meta === 'object' && typeof window.meta.title !== 'undefined') {
-                    document.title = window.meta.title + " | " + this.id;
-                } else { 
-                    document.title = this.page_title + " | " + this.id;
+                // is there a page-title attribute
+                if (this.ele.hasAttribute('page-title')) {
+                    document.title = this.ele.getAttribute('page-title');
+                } else {
+                    // is there an orriginal page title to prepend
+                    if (typeof window.meta === 'object' && typeof window.meta.title !== 'undefined') {
+                        document.title = window.meta.title + " | " + this.id;
+                    } else { 
+                        // prepend the current page title
+                        document.title = this.page_title + " | " + this.id;
+                    }
                 }
             }
             // Update canonical
@@ -720,20 +770,6 @@ page.prototype = {
             return false;
         }
     },
-    addPage: function (value) {
-        if (typeof this.ele !== 'undefined' && this.ele !== null) {
-            if (this.ele.hasAttribute('page')) {
-                console.log("Page.js: page already exists as '" + this.ele.getAttribute('page') + "'");
-                return false;
-            } else {
-                this.ele.setAttribute("page", value);
-                return this;
-            }
-        } else {
-            console.log("Page.js: invalid selector");
-            return false;
-        }
-    },
     removePage: function () {
         if (typeof this.ele !== 'undefined' && this.ele !== null && this.ele.hasAttribute('page')) {
             this.ele.removeAttribute("page");
@@ -741,21 +777,6 @@ page.prototype = {
         } else {
             console.log("Page.js: invalid selector or no page attribute");
             return false;
-        }
-    },
-    exist: function (value) {
-        if (typeof this.ele !== 'undefined' && this.ele !== null && typeof value !== 'undefined' && value !== null) {
-            if (this.ele.hasAttribute('page')) {
-                return this.ele.getAttribute('page') === value ? true : false;
-            } else {
-                return false;
-            }
-        } else if (typeof this.ele !== 'undefined' && this.ele !== null) {
-            if (this.ele.hasAttribute('page')) {
-                return this.ele.getAttribute('page') === this.id ? this : false;
-            } else {
-                return false;
-            }
         }
     }
 };
