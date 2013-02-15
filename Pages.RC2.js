@@ -3,7 +3,7 @@
  *                      As Page.js evolved it aimed to solve the common problems associated with writing this new style of application. It became clear early on that Page.js was well suited for building simple single page applications without the requirement of heavier libraries such as jQuery to perform simple DOM related functions.
  *
  * @author  Christopher D. Langton chris@codewiz.biz
- * @version     1 Beta RC2
+ * @version     RC2
  */
 //fixes for old browsers
 if (!document.getElementsByClassName) {
