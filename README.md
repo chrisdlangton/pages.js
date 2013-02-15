@@ -1,5 +1,6 @@
 [logo]: https://raw.github.com/chrisdlangton/pages.js/master/logo.png "Pages.js Logo"
-[1]: http://pagesjs.chrisdlangton.com
+[1]: http://pagesjs.chrisdlangton.com/
+[2]: http://chrisdlangton.com/
 
 [Pages.js JavaScript Micro-Framework][1]
 ========
@@ -42,7 +43,7 @@ Pages.js will listen for the browser onhashchange event if it is supported (FF3.
 
 ## Installation:
 
-Download the latest Pages.js file from [http://chrisdlangton.com/[chrisdlangton.com] and upload it to  your public javascripts directory. 
+Download the latest Pages.js file from [chrisdlangton.com][2] and upload it to  your public javascripts directory. 
 
 Include the script in your html body after all the content (at the bottom of the body element) like so;
 
