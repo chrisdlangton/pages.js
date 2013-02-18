@@ -10,7 +10,7 @@
 # Official Website
 [pagesjs.chrisdlangton.com][1]
 
-Running on Pages.RC2.js - including full usagve documentation of features up to the Release Candidate 2.
+Running on Pages.RC2.js - including full usage documentation of features up to the Release Candidate 2.
 
 # What is Pages.js
 Pages.js is a small JavaScript Framework originally built as an experiment in designing single page applications. 
