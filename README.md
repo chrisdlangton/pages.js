@@ -10,6 +10,8 @@
 # Official Website
 [pagesjs.chrisdlangton.com][1]
 
+Running on Pages.RC2.js - including full usagve documentation of features up to the Release Candidate 2.
+
 # What is Pages.js
 Pages.js is a small JavaScript Framework originally built as an experiment in designing single page applications. 
 
@@ -43,7 +45,7 @@ Pages.js will listen for the browser onhashchange event if it is supported (FF3.
 
 ## Installation:
 
-Download the latest Pages.js file from [chrisdlangton.com][2] and upload it to  your public javascripts directory. 
+Download the latest Pages.js or Pages.min.js file from this repository or from [chrisdlangton.com][2] and upload it to  your public javascripts directory. 
 
 Include the script in your html body after all the content (at the bottom of the body element) like so;
 
@@ -57,7 +59,7 @@ Each 'page' element needs to be defined with the custom attribute 'page' with a 
 <div class="container" page="home">
     site home page content
 </div>
-<div class="container" page="about">
+<div class="container" page="about" page-title="All About Me">
     about me page content
 </div>
 <div class="container" page="contact">
@@ -102,36 +104,6 @@ page('.container'); // returns all three elements that have the class 'container
 # Documentation
 
 A full guide to Pages.js is made avaialble at: [pagesjs.chrisdlangton.com][1]
-
-### Methods available to a selected element that has the page attribute:
-
-* *nav*: Shifts the perspective to the defined page reference.
-* *addPage*: The selected element will be made into a 'page' with the set reference.
-* *removePage*: The selected element with the set reference will no longer be a 'page'.
-* *exist*: Checks if the selected element is a 'page'.
-
-### Methods available to any selected element:
-
-* *forEach*: Calls the callback function one time for each element present in the array, in ascending index order.
-* *hide*: Sets css style property "display: none;"
-* *show*: Sets css style property "display: inherit;"
-* *toggle*: Toggles css style property "display" to "none/inherit"
-* *trim*: Removes white space from begining and end of a string value from a selected element.
-* *disable*: Disables the selected input or all inputs within the selected element.
-* *enable*: Enables the selected input or all inputs within the selected element.
-* *stringify*: Transforms a JSON object to a string and replaces the value or inner-html of the selected element with the new string.
-* *parse*: Transforms a string in JSON format from the value or inner-html of the selected element to a new object.
-* *html*: If no property is set it will output the inner-html of the selected element, otherwise it will replace it with the string set in the property.
-* *val*: If no property is set it will output the value of the selected element, otherwise it will replace it with the string set in the property.
-* *style*: Sets the css style property and value.
-* *remove*: Delete the selected element node.
-* *empty*: Removes the value or inner-html contents from the selected element and keeps the node in tact.
-* *addClass*: Add an additional class name to the selected property.
-* *removeClass*: Removes all instances of a class from the selected element.
-* *attr*: Sets an attribte to the selected element.
-* *append*: Append content to the inner-html of the selected element.
-* *prepend*: Prepend content to the inner-html of the selected element.
-* *goTo*: Scroll the screen into view of the selected element.
 
 ## Change Log
 
