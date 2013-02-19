@@ -3,7 +3,7 @@
  *                      As Page.js evolved it aimed to solve the common problems associated with writing this new style of application. It became clear early on that Page.js was well suited for building simple single page applications without the requirement of heavier libraries such as jQuery to perform simple DOM related functions.
  *
  * @author  Christopher D. Langton chris@codewiz.biz
- * @version     1 Beta RC2
+ * @version     Beta RC3
  */
 //fixes for old browsers
 if (!document.getElementsByClassName) {
@@ -42,11 +42,11 @@ function page(id) {
     // About object is returned if there is no 'id' parameter
     var about = {
         Library: "Pages.js",
-        Version: "RC2",
+        Version: "RC3",
         Author: "Christopher D. Langton",
         Website: "http:\/\/chrisdlangton.com",
         Created: "2013-02-03",
-        Updated: "2013-02-13"
+        Updated: "2013-02-19"
     };
     if (id) {
         // return a new page object if we're in the window scope
@@ -626,6 +626,17 @@ page.prototype = {
                     return this;
                 }
             }
+        } else {
+            return false;
+        }
+    },
+    hasClass: function (c) {
+        if (typeof this.ele !== 'undefined' && this.ele !== null) {
+            var r = true, e = this.ele.className.split(' '); c = c.split(' ');
+            for(var i=0; i<c.length; i++)
+                if(e.indexOf(c[i])===-1)
+                r = false;
+            return r;
         } else {
             return false;
         }
