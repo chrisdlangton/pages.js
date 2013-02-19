@@ -741,6 +741,42 @@ page.prototype = {
                     }
                 }
             }
+        // HTML5 history state
+        if (window.history.replaceState) {
+            // was a title given
+            if ( typeof obj === 'object' && typeof obj.title !== 'undefined' ) {
+                //title legacy: this is not currently supported by any major browsers.
+                document.getElementsByTagName('title')[0].innerHTML = obj.title;
+                window.history.pushState({
+                    page: this.id
+                }, obj.title, this.canonical + "#!" + this.id );                
+            } else {
+                // is there a page-title attribute
+                if (this.ele.hasAttribute('page-title')) {
+                    //title legacy: this is not currently supported by any major browsers.
+                    document.getElementsByTagName('title')[0].innerHTML = this.ele.getAttribute('page-title');
+                    window.history.pushState({
+                        page: this.id
+                    }, this.ele.getAttribute('page-title'), this.canonical + "#!" + this.id );                
+                } else {
+                    // is there an orriginal page title to prepend
+                    if (typeof window.meta === 'object' && typeof window.meta.title !== 'undefined') {
+                        //title legacy: this is not currently supported by any major browsers.
+                        document.getElementsByTagName('title')[0].innerHTML = window.meta.title + " | " + this.id;
+                        window.history.pushState({
+                            page: this.id
+                        }, window.meta.title + " | " + this.id, this.canonical + "#!" + this.id );                
+                    } else { 
+                        // prepend the current page title
+                        //title legacy: this is not currently supported by any major browsers.
+                        document.getElementsByTagName('title')[0].innerHTML = this.page_title + " | " + this.id;
+                        window.history.pushState({
+                            page: this.id
+                        }, this.page_title + " | " + this.id, this.canonical + "#!" + this.id );                
+                    }
+                }
+            }
+        } else {
             // update Title
             // was a title given
             if ( typeof obj === 'object' && typeof obj.title !== 'undefined' ) {
@@ -759,6 +795,7 @@ page.prototype = {
                     }
                 }
             }
+        }
             // Update canonical
             var link_arr = document.getElementsByTagName("link");
             for (i = 0; i < link_arr.length; i++) {
