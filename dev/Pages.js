@@ -32,7 +32,7 @@ if (typeof Array.prototype.indexOf !== 'function') {
 //	page Object Constructor
 function page(id) {
     this.hash = window.location.hash.substring(2);
-    this.page_title = document.title.replace('<', '&lt;').replace('>', '&gt;').replace(' & ', ' &amp; ').substring(0, document.title.replace('<', '&lt;').replace('>', '&gt;').replace(' & ', ' &amp; ').indexOf(" |") ) || document.title.replace('<', '&lt;').replace('>', '&gt;').replace(' & ', ' &amp; ');
+    this.page_title = document.getElementsByTagName('title')[0].innerHTML.replace('<', '&lt;').replace('>', '&gt;').replace(' & ', ' &amp; ').substring(0, document.getElementsByTagName('title')[0].innerHTML.replace('<', '&lt;').replace('>', '&gt;').replace(' & ', ' &amp; ').indexOf(" |") ) || document.getElementsByTagName('title')[0].innerHTML.replace('<', '&lt;').replace('>', '&gt;').replace(' & ', ' &amp; ');
     var link_arr = document.getElementsByTagName("link");
     for (var i = 0; i < link_arr.length; i++) {
         if (link_arr[i].getAttribute('rel') === 'canonical') {
@@ -103,7 +103,7 @@ function page(id) {
 page.prototype = {
     init: function () {
         window.meta = {
-            title: document.title.replace('<', '&lt;').replace('>', '&gt;').replace(' & ', ' &amp; ')
+            title: document.getElementsByTagName('title')[0].innerHTML.replace('<', '&lt;').replace('>', '&gt;').replace(' & ', ' &amp; ')
         }
         if (this.hash.length > 1) {
             if (page('_' + this.hash).exist()) {
@@ -748,14 +748,14 @@ page.prototype = {
             } else {
                 // is there a page-title attribute
                 if (this.ele.hasAttribute('page-title')) {
-                    document.title = this.ele.getAttribute('page-title');
+                    document.getElementsByTagName('title')[0].innerHTML = this.ele.getAttribute('page-title');
                 } else {
                     // is there an orriginal page title to prepend
                     if (typeof window.meta === 'object' && typeof window.meta.title !== 'undefined') {
-                        document.title = window.meta.title + " | " + this.id;
+                        document.getElementsByTagName('title')[0].innerHTML = window.meta.title + " | " + this.id;
                     } else { 
                         // prepend the current page title
-                        document.title = this.page_title + " | " + this.id;
+                        document.getElementsByTagName('title')[0].innerHTML = this.page_title + " | " + this.id;
                     }
                 }
             }
