@@ -728,11 +728,20 @@ page.prototype = {
         }
     },
     change: function (callback) {
-        window.addEventListener('popstate', function(e){
-            if (history.state){
-                return callback(e);
-            }
-        });
+        var self = this;
+        if (history && history.pushState) {
+            window.addEventListener("popstate", function(e) {
+                if (window.location.hash.substring(2) === self.id){
+                    callback( { page: self.id, title: document.getElementsByTagName('title')[0].innerHTML, node: self.ele } );
+                }
+            });
+        } else {
+            window.addEventListener("hashchange", function(e) {
+                if (window.location.hash.substring(2) === self.id){
+                    callback( { page: self.id, title: document.getElementsByTagName('title')[0].innerHTML, node: self.ele } );
+                }
+            });
+        }
     },
     nav: function (obj, callback) {
         //navigate
