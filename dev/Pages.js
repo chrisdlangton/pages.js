@@ -5,32 +5,32 @@
  * @author  Christopher D. Langton chris@codewiz.biz
  * @version     Beta RC3
  */
-//fixes for old browsers
-if (!document.getElementsByClassName) {
-    document.getElementsByClassName = function (classname) {
-        var elArray = [];
-        var tmp = document.getElementsByTagName("*");
-        var regex = new RegExp("(^|\s)" + classname + "(\s|$)");
-        for (var i = 0; i < tmp.length; i++) {
-            if (regex.test(tmp[i].className)) {
-                elArray.push(tmp[i]);
+//	pages.js selector
+function p(id) {
+    //fixes for old browsers
+    if (!document.getElementsByClassName) {
+        document.getElementsByClassName = function (classname) {
+            var elArray = [];
+            var tmp = document.getElementsByTagName("*");
+            var regex = new RegExp("(^|\s)" + classname + "(\s|$)");
+            for (var i = 0; i < tmp.length; i++) {
+                if (regex.test(tmp[i].className)) {
+                    elArray.push(tmp[i]);
+                }
             }
-        }
-        return elArray;
-    };
-}
-if (typeof Array.prototype.indexOf !== 'function') {
-    Array.prototype.indexOf = function (item) {
-        for (var i = 0; i < this.length; i++) {
-            if (this[i] === item) {
-                return i;
+            return elArray;
+        };
+    }
+    if (typeof Array.prototype.indexOf !== 'function') {
+        Array.prototype.indexOf = function (item) {
+            for (var i = 0; i < this.length; i++) {
+                if (this[i] === item) {
+                    return i;
+                }
             }
-        }
-        return -1;
-    };
-}
-//	page Object Constructor
-function page(id) {
+            return -1;
+        };
+    }
     this.hash = window.location.hash.substring(2);
     this.page_title = document.getElementsByTagName('title')[0].innerHTML.replace('<', '&lt;').replace('>', '&gt;').replace(' & ', ' &amp; ').substring(0, document.getElementsByTagName('title')[0].innerHTML.replace('<', '&lt;').replace('>', '&gt;').replace(' & ', ' &amp; ').indexOf(" |") ) || document.getElementsByTagName('title')[0].innerHTML.replace('<', '&lt;').replace('>', '&gt;').replace(' & ', ' &amp; ');
     var link_arr = document.getElementsByTagName("link");
@@ -100,8 +100,10 @@ function page(id) {
     }
 };
 //	Page.js prototype methods
-page.prototype = {
+p.prototype = {
     init: function () {
+        // prevent init being used multiple times
+        if (typeof window.meta !== 'undefined') { return; }
         window.meta = {
             title: document.getElementsByTagName('title')[0].innerHTML.replace('<', '&lt;').replace('>', '&gt;').replace(' & ', ' &amp; ')
         }
