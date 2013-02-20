@@ -727,7 +727,14 @@ page.prototype = {
             return false;
         }
     },
-    nav: function (obj) {
+    change: function (callback) {
+        window.addEventListener('popstate', function(e){
+            if (history.state){
+                return callback(e);
+            }
+        });
+    },
+    nav: function (obj, callback) {
         //navigate
         if (typeof this.ele !== 'undefined' && this.ele !== null && this.ele.hasAttribute('page')) {
             var elements = document.getElementsByTagName('*');
@@ -812,7 +819,12 @@ page.prototype = {
                 reinvigorate.ajax_track(window.location);
                 // ^ we use the full url here as that is what reinvigorate supports
             }
-            return this;
+            if (typeof callback !== 'undefined') {
+                var self = this;
+                return callback( { page: self.id, title: document.getElementsByTagName('title')[0].innerHTML, node: self.ele } );
+            } else {
+                return this;
+            }
         } else {
             console.log("Page.js: nav method only available for page selector");
             return false;
