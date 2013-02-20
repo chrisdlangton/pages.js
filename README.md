@@ -1,35 +1,35 @@
-[logo]: https://raw.github.com/chrisdlangton/pages.js/master/logo.png "Pages.js Logo"
+[logo]: https://raw.github.com/chrisdlangton/pages.js/master/logo.png "PagesJS Logo"
 [1]: http://pagesjs.chrisdlangton.com/
 [2]: http://chrisdlangton.com/
 
-[Pages.js JavaScript Micro-Framework][1]
+[PagesJS JavaScript Micro-Framework][1]
 ========
 
-![Pages.js Logo][logo]
+![PagesJS Logo][logo]
 
-[![Flattr this git repo](http://api.flattr.com/button/flattr-badge-large.png)](https://flattr.com/submit/auto?user_id=chrisdlangton&url=https://github.com/chrisdlangton/pages.js&title=pages.js&language=&tags=github&category=software)
+[![Flattr this git repo](http://api.flattr.com/button/flattr-badge-large.png)](https://flattr.com/submit/auto?user_id=chrisdlangton&url=https://github.com/chrisdlangton/pages.js&title=PagesJS&language=&tags=github&category=software)
 
 # Official Website
 [pagesjs.chrisdlangton.com][1]
 
 Running on Pages.RC2.js - including full usage documentation of features up to the Release Candidate 2.
 
-# What is Pages.js
-Pages.js is a small JavaScript Framework originally built as an experiment in designing single page applications. 
+# What is PagesJS
+PagesJS is a small JavaScript Framework originally built as an experiment in designing single page applications. 
 
-As Pages.js evolved it aimed to solve the common problems associated with writing this new style of application. It became clear early on that Pages.js was well suited for building simple single page applications without the requirement of heavier libraries or frameworks to perform simple DOM related functions.
+As PagesJS evolved it aimed to solve the common problems associated with writing this new style of application. It became clear early on that PagesJS was well suited for building simple single page applications without the requirement of heavier libraries or frameworks to perform simple DOM related functions.
 
-Pages.js tries to achieve this by providing a small 'core' framework and an ever-growing list of methods for specific functionality. The core is a simple selector API familiar to jQuery that allows the developer to switch between your single page web app 'pages' seamlessly in the most minimal way possible.
+PagesJS tries to achieve this by providing a small 'core' framework and an ever-growing list of methods for specific functionality. The core is a simple selector API familiar to jQuery that allows the developer to switch between your single page web app 'pages' seamlessly in the most minimal way possible.
 
-Pages.js is not a solution for every JavaScript application or problematic situation. It is a solution for small single page apps using no framework and also some larger applications using one or more frameworks, to have a simple interface that allows the developer to bring in and hide from view 'page' elements while allowing each 'page' to be bookmark-able and seamless to the end user.
+PagesJS is not a solution for every JavaScript application or problematic situation. It is a solution for small single page apps using no framework and also some larger applications using one or more frameworks, to have a simple interface that allows the developer to bring in and hide from view 'page' elements while allowing each 'page' to be bookmark-able and seamless to the end user.
 
-# Why Pages.js
+# Why PagesJS
 
 The name came from the single-page application experiment.
 
 In the modern age of super-fast browsers and user expectations about the responsiveness and perceived speed of web applications - single page AJAX applications have become the rage (GMail for example.) Furthermore, instead of just fetching full HTML and rendering it asynchronously, fetching raw data (JSON) and rendering on the client side has not only become possible - it's actually very common.
 
-_Pages.js has no dependencies - It is a pure JavaScript Library._
+_PagesJS has no dependencies - It is a pure JavaScript Library._
 
 _Pages are navigatable using browser back and forward buttons._
 
@@ -37,17 +37,17 @@ _Pages are bookmarkable._
 
 _Proper Google Analytics and ReInvigorate page tracking._
 
-Pages.js was originally built alongside Knockout.js as the only other JavaScript library present and therefore doesn't include any of the MVVM features or binding which would have overlapped with that particular library, but it does however share a lot of common functionality to jQuery which was not present in the experiment application but the functionality was required so I built it into Pages.js instead of having jQuery as a dependency.
+PagesJS was originally built alongside Knockout.js as the only other JavaScript library present and therefore doesn't include any of the MVVM features or binding which would have overlapped with that particular library, but it does however share a lot of common functionality to jQuery which was not present in the experiment application but the functionality was required so I built it into PagesJS instead of having jQuery as a dependency.
 
 # How does it work?
 
-Pages.js will listen for the browser onhashchange event if it is supported (FF3.6+, IE8+, Chrome 5+, Safari 5+, Opera 10.6+) or it will fallback to pooling the window.location on an interval to check if hash value changed. 
+PagesJS will listen for the browser onhashchange event if it is supported (FF3.6+, IE8+, Chrome 5+, Safari 5+, Opera 10.6+) or it will fallback to pooling the window.location on an interval to check if hash value changed. 
 
-# How to use Pages.js
+# How to use PagesJS
 
 ## Installation:
 
-Download the latest Pages.js or Pages.min.js file from this repository or from [chrisdlangton.com][2] and upload it to  your public javascripts directory. 
+Download the latest PagesJS or Pages.min.js file from this repository or from [chrisdlangton.com][2] and upload it to  your public javascripts directory. 
 
 Include the script in your html body after all the content (at the bottom of the body element) like so;
 
@@ -71,7 +71,7 @@ Each 'page' element needs to be defined with the custom attribute 'page' with a 
 
 ## Basic Usage:
 
-As long as each page attribute is defined and Pages.js included, you can navigate to any one of these 'pages' using the hash bang (#!) in your url.
+As long as each page attribute is defined and PagesJS included, you can navigate to any one of these 'pages' using the hash bang (#!) in your url.
 
 For example type in http://myappdomain/#!contact will show you the element with the page attribute equal to the hash bang (#!) value 'contact' and hide all other elements with a page attribute defined that do not equal the hash bang (#!) value 'contact', i.e. 'home' and 'about' will be hidden.
 
@@ -105,7 +105,7 @@ page('.container'); // returns all three elements that have the class 'container
 
 # Documentation
 
-A full guide to Pages.js is made avaialble at: [pagesjs.chrisdlangton.com][1]
+A full guide to PagesJS is made avaialble at: [pagesjs.chrisdlangton.com][1]
 
 ## Change Log
 
