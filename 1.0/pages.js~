@@ -108,16 +108,16 @@ p.prototype = {
             title: document.getElementsByTagName('title')[0].innerHTML.replace('<', '&lt;').replace('>', '&gt;').replace(' & ', ' &amp; ')
         }
         if (this.hash.length > 1) {
-            if (p('_' + this.hash).exist()) {
-                p('_' + this.hash).nav();
+            if (page('_' + this.hash).exist()) {
+                page('_' + this.hash).nav();
             }
         }
         if ("onhashchange" in window) {
             window.onhashchange = function () {
                 this.hash = window.location.hash.substring(2);
                 if (this.hash.length > 1) {
-                    if (p('_' + this.hash).exist()) {
-                        p('_' + this.hash).nav();
+                    if (page('_' + this.hash).exist()) {
+                        page('_' + this.hash).nav();
                     }
                 }
             };
@@ -127,8 +127,8 @@ p.prototype = {
                 if (window.location.hash !== prevHash) {
                     this.hash = window.location.hash.substring(2);
                     if (this.hash.length > 1) {
-                        if (p('_' + this.hash).exist()) {
-                            p('_' + this.hash).nav();
+                        if (page('_' + this.hash).exist()) {
+                            page('_' + this.hash).nav();
                         }
                     }
                 }
