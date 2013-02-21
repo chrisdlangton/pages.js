@@ -29,13 +29,25 @@ The name came from the single-page application experiment.
 
 In the modern age of super-fast browsers and user expectations about the responsiveness and perceived speed of web applications - single page AJAX applications have become the rage (GMail for example.) Furthermore, instead of just fetching full HTML and rendering it asynchronously, fetching raw data (JSON) and rendering on the client side has not only become possible - it's actually very common.
 
-_PagesJS has no dependencies - It is a pure JavaScript Library._
+_Pages.js has no dependencies - It is a pure JavaScript Library._
 
-_Pages are navigatable using browser back and forward buttons._
+### PagesJS provides;
 
-_Pages are bookmarkable._
-
-_Proper Google Analytics and ReInvigorate page tracking._
+* A simple API.
+* No dependencies.
+* Well documented methods.
+* Browser history support for all device and browser versions.
+* Bookmarking.
+* Meta data updating per page, contributing to Social Media optimisation.
+* SEO - Google indexing conformance.
+* Google Analytics and ReInvigorate page view reporting.
+* Optimises performance on newer browser using the latest functionality with fall-backs for older browsers.
+* Page change event binding, executed specific to individual pages.
+* Uses a namespace to prevent conflicts.
+* Object constructor preventing multiple instances.
+* Contextual targeting of DOM elements and their manipulation.
+* Object literals to pass optional arguments to most methods.
+* Optional user-defined function call-back when using the navigation method to apply additional custom logic automatically and instantly after navigation.
 
 PagesJS was originally built alongside Knockout.js as the only other JavaScript library present and therefore doesn't include any of the MVVM features or binding which would have overlapped with that particular library, but it does however share a lot of common functionality to jQuery which was not present in the experiment application but the functionality was required so I built it into PagesJS instead of having jQuery as a dependency.
 
