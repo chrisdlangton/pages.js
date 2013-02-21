@@ -3,7 +3,7 @@
  *                      As PagesJS evolved it aimed to solve the common problems associated with writing this new style of application. It became clear early on that PagesJS was well suited for building simple single page applications without the requirement of heavier libraries such as jQuery to perform simple DOM related functions.
  *
  * @author  Christopher D. Langton chris@codewiz.biz
- * @version     Beta RC3
+ * @version     1.1
  */
 //	pagesJS selector
 function p(id) {
@@ -42,16 +42,16 @@ function p(id) {
     // About object is returned if there is no 'id' parameter
     var about = {
         Library: "PagesJS",
-        Version: "RC3",
+        Version: 1.1,
         Author: "Christopher D. Langton",
         Website: "http:\/\/chrisdlangton.com",
         Created: "2013-02-03",
-        Updated: "2013-02-19"
+        Updated: "2013-02-22"
     };
     if (id) {
         // return a new page object if we're in the window scope
         if (window === this) {
-            return new page(id);
+            return new p(id);
         }
         // Init our element object and return the object
         if (id.charAt(0) === '#') {
@@ -107,32 +107,26 @@ p.prototype = {
         window.meta = {
             title: document.getElementsByTagName('title')[0].innerHTML.replace('<', '&lt;').replace('>', '&gt;').replace(' & ', ' &amp; ')
         }
-        if (this.hash.length > 1) {
-            if (page('_' + this.hash).exist()) {
-                page('_' + this.hash).nav();
-            }
-        }
         if ("onhashchange" in window) {
             window.onhashchange = function () {
-                this.hash = window.location.hash.substring(2);
-                if (this.hash.length > 1) {
-                    if (page('_' + this.hash).exist()) {
-                        page('_' + this.hash).nav();
-                    }
+                var hash = window.location.hash.substring(2);
+                if (hash.length > 1) {
+                    p('_' + hash).exist().nav();
                 }
             };
         } else {
             var prevHash = window.location.hash;
             window.setInterval(function () {
                 if (window.location.hash !== prevHash) {
-                    this.hash = window.location.hash.substring(2);
-                    if (this.hash.length > 1) {
-                        if (page('_' + this.hash).exist()) {
-                            page('_' + this.hash).nav();
-                        }
+                    var hash = window.location.hash.substring(2);
+                    if (hash.length > 1) {
+                        p('_' + hash).exist().nav();
                     }
                 }
             }, 500);
+        }
+        if (this.hash.length > 1) {
+            p('_' + this.hash).exist().nav();
         }
     },
     forEach: function (fn, scope) {

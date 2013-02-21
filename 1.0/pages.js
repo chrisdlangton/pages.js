@@ -46,7 +46,7 @@ function p(id) {
         Author: "Christopher D. Langton",
         Website: "http:\/\/chrisdlangton.com",
         Created: "2013-02-03",
-        Updated: "2013-02-21"
+        Updated: "2013-02-22"
     };
     if (id) {
         // return a new page object if we're in the window scope
@@ -107,32 +107,26 @@ p.prototype = {
         window.meta = {
             title: document.getElementsByTagName('title')[0].innerHTML.replace('<', '&lt;').replace('>', '&gt;').replace(' & ', ' &amp; ')
         }
-        if (this.hash.length > 1) {
-            if (p('_' + this.hash).exist()) {
-                p('_' + this.hash).nav();
-            }
-        }
         if ("onhashchange" in window) {
             window.onhashchange = function () {
-                this.hash = window.location.hash.substring(2);
-                if (this.hash.length > 1) {
-                    if (p('_' + this.hash).exist()) {
-                        p('_' + this.hash).nav();
-                    }
+                var hash = window.location.hash.substring(2);
+                if (hash.length > 1) {
+                    p('_' + hash).exist().nav();
                 }
             };
         } else {
             var prevHash = window.location.hash;
             window.setInterval(function () {
                 if (window.location.hash !== prevHash) {
-                    this.hash = window.location.hash.substring(2);
-                    if (this.hash.length > 1) {
-                        if (p('_' + this.hash).exist()) {
-                            p('_' + this.hash).nav();
-                        }
+                    var hash = window.location.hash.substring(2);
+                    if (hash.length > 1) {
+                        p('_' + hash).exist().nav();
                     }
                 }
             }, 500);
+        }
+        if (this.hash.length > 1) {
+            p('_' + this.hash).exist().nav();
         }
     },
     forEach: function (fn, scope) {
