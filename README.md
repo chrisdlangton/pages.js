@@ -109,7 +109,29 @@ A full guide to PagesJS is made avaialble at: [pagesjs.chrisdlangton.com][1]
 
 ## Change Log
 
-#### Version: 0.9 Latest (Feb 11 2013)
+#### Version: 1.0 Latest (Feb 22 2013)
+
+* Project offical name now PagesJS, code comments and log text updated.
+* page() namespace now p() only.
+* All code in now within the page namespace
+* New basic setup requirements initilisation and &lt;head&gt; elements
+* .init() prototype method
+* prevent init being used multiple times
+* Selector updated to provide functionality to .init() prototype method
+* hash property added and references changed
+* canonical property added and references changed
+* page_title property added and references changed
+* .nav() updated to take properties, currently only 'title' has functionality.
+* 'page-title' custom element attribute sets the webpage title upon navigation.
+* .title() prototype method
+* .hasClass() prototype method
+* .change() prototype method
+* exist() and nav() chain fix for init() method
+* fix for document.title issues in Opera and Mozilla
+* hashchange fallback for popstate
+* Included property for callback function in .nav() prototype method
+
+#### Version: 0.9 (Feb 11 2013)
 
 * slight code restructure removing redundant components
 * .capitalize() prototype method
