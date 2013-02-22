@@ -12,9 +12,10 @@
 # Official Website
 [pagesjs.chrisdlangton.com][1]
 
-Running on Pages.RC2.js - including full usage documentation of features up to the Release Candidate 2.
+Full usage documentation of features always running on the latest dev version of PagesJS.
 
 # What is PagesJS
+
 PagesJS is a small JavaScript Framework originally built as an experiment in designing single page applications. 
 
 As PagesJS evolved it aimed to solve the common problems associated with writing this new style of application. It became clear early on that PagesJS was well suited for building simple single page applications without the requirement of heavier libraries or frameworks to perform simple DOM related functions.
