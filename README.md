@@ -111,9 +111,9 @@ _Note: the selector expects the ID and Page references to be unique and will the
 Examples:
 
 ```javascript
-page('#main'); // returns nothing because there is no element with ID 'main'
-page('_about'); // returns the single element with the attribute value equal to 'about'
-page('.container'); // returns all three elements that have the class 'container'
+p('#main'); // returns nothing because there is no element with ID 'main'
+p('_about'); // returns the single element with the attribute value equal to 'about'
+p('.container'); // returns all three elements that have the class 'container'
 ```
 
 # Documentation
