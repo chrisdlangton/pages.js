@@ -3,10 +3,25 @@
  *                      As PagesJS evolved it aimed to solve the common problems associated with writing this new style of application. It became clear early on that PagesJS was well suited for building simple single page applications without the requirement of heavier libraries such as jQuery to perform simple DOM related functions.
  *
  * @author  Christopher D. Langton chris@codewiz.biz
- * @version     1.0
+ * @version     1.1
  */
 //	pagesJS selector
-function p(id) {
+function p(id,debug) {
+    // Avoid `console` errors in browsers that lack a console.
+    if (debug) {
+        this.debug = true;
+        if (!(window.console && console.log)) {
+            (function() {
+                var noop = function() {};
+                var methods = ['assert', 'clear', 'count', 'debug', 'dir', 'dirxml', 'error', 'exception', 'group', 'groupCollapsed', 'groupEnd', 'info', 'log', 'markTimeline', 'profile', 'profileEnd', 'markTimeline', 'table', 'time', 'timeEnd', 'timeStamp', 'trace', 'warn'];
+                var length = methods.length;
+                var console = window.console = {};
+                while (length--) {
+                    console[methods[length]] = noop;
+                }
+            }());
+        }
+    } else { this.debug = false; }
     //fixes for old browsers
     if (!document.getElementsByClassName) {
         document.getElementsByClassName = function (classname) {
@@ -42,11 +57,11 @@ function p(id) {
     // About object is returned if there is no 'id' parameter
     var about = {
         Library: "PagesJS",
-        Version: 1.0,
+        Version: 1.1,
         Author: "Christopher D. Langton",
         Website: "http:\/\/chrisdlangton.com",
         Created: "2013-02-03",
-        Updated: "2013-02-22"
+        Updated: "2013-02-25"
     };
     if (id) {
         // return a new page object if we're in the window scope
@@ -61,7 +76,7 @@ function p(id) {
                 this.ele = document.getElementById(id);
                 return this;
             } else {
-                console.log("PagesJS: unknown element");
+                if (this.debug) { console.log("PagesJS: unknown element"); }
                 return false;
             }
         } else if (id.charAt(0) === '.') {
@@ -71,7 +86,7 @@ function p(id) {
                 this.ele = document.getElementsByClassName(id);
                 return this;
             } else {
-                console.log("PagesJS: unknown element");
+                if (this.debug) { console.log("PagesJS: unknown element"); }
                 return false;
             }
         } else if (id.charAt(0) === '_') {
@@ -91,7 +106,7 @@ function p(id) {
         } else if (id === 'body') {
             return this;
         } else {
-            console.log("PagesJS: invalid selector");
+            if (this.debug) { console.log("PagesJS: invalid selector"); }
             return false;
         }
     } else {
@@ -190,7 +205,7 @@ p.prototype = {
     trim: function () {
         if (typeof this.ele !== 'undefined' && this.ele !== null) {
             if (typeof this.ele[1] !== 'undefined' && this.ele[1] !== null) {
-                console.log('PagesJS: method available for unique selectors only.');
+                if (this.debug) { console.log('PagesJS: method available for unique selectors only.'); }
                 return false;
             }
             if (typeof this.ele.value === "string") {
@@ -207,7 +222,7 @@ p.prototype = {
     ltrim: function () {
         if (typeof this.ele !== 'undefined' && this.ele !== null) {
             if (typeof this.ele[1] !== 'undefined' && this.ele[1] !== null) {
-                console.log('PagesJS: method available for unique selectors only.');
+                if (this.debug) { console.log('PagesJS: method available for unique selectors only.'); }
                 return false;
             }
             if (typeof this.ele.value === "string") {
@@ -224,7 +239,7 @@ p.prototype = {
     rtrim: function () {
         if (typeof this.ele !== 'undefined' && this.ele !== null) {
             if (typeof this.ele[1] !== 'undefined' && this.ele[1] !== null) {
-                console.log('PagesJS: method available for unique selectors only.');
+                if (this.debug) { console.log('PagesJS: method available for unique selectors only.'); }
                 return false;
             }
             if (typeof this.ele.value === "string") {
@@ -241,7 +256,7 @@ p.prototype = {
     clear: function (start, end) {
         if (typeof this.ele !== 'undefined' && this.ele !== null) {
             if (typeof this.ele[1] !== 'undefined' && this.ele[1] !== null) {
-                console.log('PagesJS: method available for unique selectors only.');
+                if (this.debug) { console.log('PagesJS: method available for unique selectors only.'); }
                 return false;
             }
             if (typeof this.ele.value === "string") {
@@ -262,7 +277,7 @@ p.prototype = {
     contains: function (str) {
         if (typeof this.ele !== 'undefined' && this.ele !== null) {
             if (typeof this.ele[1] !== 'undefined' && this.ele[1] !== null) {
-                console.log('PagesJS: method available for unique selectors only.');
+                if (this.debug) { console.log('PagesJS: method available for unique selectors only.'); }
                 return false;
             }
             if (typeof this.ele.value === "string") {
@@ -279,7 +294,7 @@ p.prototype = {
     reverse: function () {
         if (typeof this.ele !== 'undefined' && this.ele !== null) {
             if (typeof this.ele[1] !== 'undefined' && this.ele[1] !== null) {
-                console.log('PagesJS: method available for unique selectors only.');
+                if (this.debug) { console.log('PagesJS: method available for unique selectors only.'); }
                 return false;
             }
             if (typeof this.ele.value === "string") {
@@ -296,7 +311,7 @@ p.prototype = {
     camelCase: function () {
         if (typeof this.ele !== 'undefined' && this.ele !== null) {
             if (typeof this.ele[1] !== 'undefined' && this.ele[1] !== null) {
-                console.log('PagesJS: method available for unique selectors only.');
+                if (this.debug) { console.log('PagesJS: method available for unique selectors only.'); }
                 return false;
             }
             if (typeof this.ele.value === "string") {
@@ -317,7 +332,7 @@ p.prototype = {
     inverse: function () {
         if (typeof this.ele !== 'undefined' && this.ele !== null) {
             if (typeof this.ele[1] !== 'undefined' && this.ele[1] !== null) {
-                console.log('PagesJS: method available for unique selectors only.');
+                if (this.debug) { console.log('PagesJS: method available for unique selectors only.'); }
                 return false;
             }
             if (typeof this.ele.value === "string") {
@@ -343,7 +358,7 @@ p.prototype = {
         }
         if (typeof this.ele !== 'undefined' && this.ele !== null) {
             if (typeof this.ele[1] !== 'undefined' && this.ele[1] !== null) {
-                console.log('PagesJS: method available for unique selectors only.');
+                if (this.debug) { console.log('PagesJS: method available for unique selectors only.'); }
                 return false;
             }
             if (typeof this.ele.value === "string") {
@@ -364,7 +379,7 @@ p.prototype = {
     disable: function () {
         if (typeof this.ele !== 'undefined' && this.ele !== null) {
             if (typeof this.ele[1] !== 'undefined' && this.ele[1] !== null) {
-                console.log('PagesJS: method available for unique selectors only.');
+                if (this.debug) { console.log('PagesJS: method available for unique selectors only.'); }
                 return false;
             }
             if ((this.ele.tagName && this.ele.tagName.toLowerCase() === "textarea") || (this.ele.tagName && this.ele.tagName.toLowerCase() === "input" && this.ele.type.toLowerCase() === "text")) {
@@ -397,7 +412,7 @@ p.prototype = {
     enable: function () {
         if (typeof this.ele !== 'undefined' && this.ele !== null) {
             if (typeof this.ele[1] !== 'undefined' && this.ele[1] !== null) {
-                console.log('PagesJS: method available for unique selectors only.');
+                if (this.debug) { console.log('PagesJS: method available for unique selectors only.'); }
                 return false;
             }
             if ((this.ele.tagName && this.ele.tagName.toLowerCase() === "textarea") || (this.ele.tagName && this.ele.tagName.toLowerCase() === "input" && this.ele.type.toLowerCase() === "text")) {
@@ -429,7 +444,7 @@ p.prototype = {
     },
     stringify: function (obj) {
         if (typeof this.ele[1] !== 'undefined' && this.ele[1] !== null) {
-            console.log('PagesJS: method available for unique selectors only.');
+            if (this.debug) { console.log('PagesJS: method available for unique selectors only.'); }
             return false;
         }
         if (obj && typeof obj === 'object') {
@@ -451,17 +466,17 @@ p.prototype = {
                 }
                 return this;
             } else {
-                console.log('PagesJS: browser doesnt support json natively');
+                if (this.debug) { console.log('PagesJS: browser doesnt support json natively'); }
                 return false;
             }
         } else {
-            console.log('PagesJS: stringify accepts an object');
+            if (this.debug) { console.log('PagesJS: stringify accepts an object'); }
             return false;
         }
     },
     parse: function () {
         if (typeof this.ele[1] !== 'undefined' && this.ele[1] !== null) {
-            console.log('PagesJS: method available for unique selectors only.');
+            if (this.debug) { console.log('PagesJS: method available for unique selectors only.'); }
             return false;
         }
         var data = "";
@@ -471,11 +486,11 @@ p.prototype = {
                 if (window.JSON && window.JSON.parse) {
                     return window.JSON.parse(data);
                 } else {
-                    console.log('PagesJS: browser doesnt support json natively');
+                    if (this.debug) { console.log('PagesJS: browser doesnt support json natively'); }
                     return false;
                 }
             } else {
-                console.log('PagesJS: parse accepts a string');
+                if (this.debug) { console.log('PagesJS: parse accepts a string'); }
                 return false;
             }
         } else {
@@ -484,7 +499,7 @@ p.prototype = {
                 if (window.JSON && window.JSON.parse) {
                     return window.JSON.parse(data);
                 } else {
-                    console.log('PagesJS: browser doesnt support json natively');
+                    if (this.debug) { console.log('PagesJS: browser doesnt support json natively'); }
                     return false;
                 }
             }
@@ -493,7 +508,7 @@ p.prototype = {
     html: function (replacement) {
         if (typeof this.ele !== 'undefined' && this.ele !== null) {
             if (typeof this.ele[1] !== 'undefined' && this.ele[1] !== null) {
-                console.log('PagesJS: method available for unique selectors only.');
+                if (this.debug) { console.log('PagesJS: method available for unique selectors only.'); }
                 return false;
             }
             if (typeof replacement === "undefined") {
@@ -509,7 +524,7 @@ p.prototype = {
     val: function (replacement) {
         if (typeof this.ele !== 'undefined' && this.ele !== null) {
             if (typeof this.ele[1] !== 'undefined' && this.ele[1] !== null) {
-                console.log('PagesJS: method available for unique selectors only.');
+                if (this.debug) { console.log('PagesJS: method available for unique selectors only.'); }
                 return false;
             }
             if (this.ele.tagName && this.ele.tagName.toLowerCase() === "input") {
@@ -520,7 +535,7 @@ p.prototype = {
                     return this;
                 }
             } else {
-                console.log('PagesJS: method available for input selectors only.');
+                if (this.debug) { console.log('PagesJS: method available for input selectors only.'); }
                 return false;
             }
         } else {
@@ -546,7 +561,7 @@ p.prototype = {
         if (typeof this.ele !== 'undefined' && this.ele !== null) {
             var elem;
             if (typeof this.ele[1] !== 'undefined' && this.ele[1] !== null) {
-                console.log('PagesJS: method available for unique selectors only.');
+                if (this.debug) { console.log('PagesJS: method available for unique selectors only.'); }
                 return false;
             }
             (elem = this.ele).parentNode.removeChild(elem);
@@ -655,7 +670,7 @@ p.prototype = {
     append: function (elems) {
         if (typeof this.ele !== 'undefined' && this.ele !== null && typeof elems === "string") {
             if (typeof this.ele[1] !== 'undefined' && this.ele[1] !== null) {
-                console.log('PagesJS: method available for unique selectors only.');
+                if (this.debug) { console.log('PagesJS: method available for unique selectors only.'); }
                 return false;
             }
             this.ele.innerHTML = this.ele.innerHTML + elems;
@@ -667,7 +682,7 @@ p.prototype = {
     prepend: function (elems) {
         if (typeof this.ele !== 'undefined' && this.ele !== null && typeof elems === "string") {
             if (typeof this.ele[1] !== 'undefined' && this.ele[1] !== null) {
-                console.log('PagesJS: method available for unique selectors only.');
+                if (this.debug) { console.log('PagesJS: method available for unique selectors only.'); }
                 return false;
             }
             this.ele.innerHTML = elems + this.ele.innerHTML;
@@ -683,14 +698,14 @@ p.prototype = {
     addPage: function (value) {
         if (typeof this.ele !== 'undefined' && this.ele !== null) {
             if (this.ele.hasAttribute('page')) {
-                console.log("PagesJS: page already exists as '" + this.ele.getAttribute('page') + "'");
+                if (this.debug) { console.log("PagesJS: page already exists as '" + this.ele.getAttribute('page') + "'"); }
                 return false;
             } else {
                 this.ele.setAttribute("page", value);
                 return this;
             }
         } else {
-            console.log("PagesJS: invalid selector");
+            if (this.debug) { console.log("PagesJS: invalid selector"); }
             return false;
         }
     },
@@ -719,7 +734,7 @@ p.prototype = {
                 return this;
             }
         } else {
-            console.log("PagesJS: pageTitle method only available for page selector");
+            if (this.debug) { console.log("PagesJS: pageTitle method only available for page selector"); }
             return false;
         }
     },
@@ -831,7 +846,7 @@ p.prototype = {
                 return this;
             }
         } else {
-            console.log("PagesJS: nav method only available for page selector");
+            if (this.debug) { console.log("PagesJS: nav method only available for page selector"); }
             return false;
         }
     },
@@ -840,7 +855,7 @@ p.prototype = {
             this.ele.removeAttribute("page");
             return this;
         } else {
-            console.log("PagesJS: invalid selector or no page attribute");
+            if (this.debug) { console.log("PagesJS: invalid selector or no page attribute"); }
             return false;
         }
     }
