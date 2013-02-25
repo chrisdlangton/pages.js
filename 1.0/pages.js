@@ -6,22 +6,7 @@
  * @version     1.1
  */
 //	pagesJS selector
-function p(id,debug) {
-    // Avoid `console` errors in browsers that lack a console.
-    if (debug) {
-        this.debug = true;
-        if (!(window.console && console.log)) {
-            (function() {
-                var noop = function() {};
-                var methods = ['assert', 'clear', 'count', 'debug', 'dir', 'dirxml', 'error', 'exception', 'group', 'groupCollapsed', 'groupEnd', 'info', 'log', 'markTimeline', 'profile', 'profileEnd', 'markTimeline', 'table', 'time', 'timeEnd', 'timeStamp', 'trace', 'warn'];
-                var length = methods.length;
-                var console = window.console = {};
-                while (length--) {
-                    console[methods[length]] = noop;
-                }
-            }());
-        }
-    } else { this.debug = false; }
+function p(id,debug) { if (debug) { this.debug = true; if (!(window.console && console.log)) { (function() { var noop = function() {}; var methods = ['assert', 'clear', 'count', 'debug', 'dir', 'dirxml', 'error', 'exception', 'group', 'groupCollapsed', 'groupEnd', 'info', 'log', 'markTimeline', 'profile', 'profileEnd', 'markTimeline', 'table', 'time', 'timeEnd', 'timeStamp', 'trace', 'warn']; var length = methods.length; var console = window.console = {}; while (length--) { console[methods[length]] = noop; } }()); } } else { this.debug = false; } 
     //fixes for old browsers
     if (!document.getElementsByClassName) {
         document.getElementsByClassName = function (classname) {
