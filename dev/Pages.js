@@ -13,9 +13,10 @@ function p(id) {
             var elArray = [];
             var tmp = document.getElementsByTagName("*");
             var regex = new RegExp("(^|\s)" + classname + "(\s|$)");
-            for (var i = 0; i < tmp.length; i++) {
-                if (regex.test(tmp[i].className)) {
-                    elArray.push(tmp[i]);
+            for (var i = 0, j = tmp.length; i < j; i++) {
+                var itm = tmp[i];
+                if (regex.test(itm.className)) {
+                    elArray.push(itm);
                 }
             }
             return elArray;
@@ -23,7 +24,7 @@ function p(id) {
     }
     if (typeof Array.prototype.indexOf !== 'function') {
         Array.prototype.indexOf = function (item) {
-            for (var i = 0; i < this.length; i++) {
+            for (var i = 0, j = this.length; i < j; i++) {
                 if (this[i] === item) {
                     return i;
                 }
@@ -32,11 +33,15 @@ function p(id) {
         };
     }
     this.hash = window.location.hash.substring(2);
-    this.page_title = document.getElementsByTagName('title')[0].innerHTML.replace('<', '&lt;').replace('>', '&gt;').replace(' & ', ' &amp; ').substring(0, document.getElementsByTagName('title')[0].innerHTML.replace('<', '&lt;').replace('>', '&gt;').replace(' & ', ' &amp; ').indexOf(" |") ) || document.getElementsByTagName('title')[0].innerHTML.replace('<', '&lt;').replace('>', '&gt;').replace(' & ', ' &amp; ');
+    this.page_title = (function() {
+        var encTitle = document.getElementsByTagName('title')[0].innerHTML.replace('<', '&lt;').replace('>', '&gt;').replace(' & ', ' &amp; ');
+        return encTitle.substring(0, encTitle.indexOf(" |") ) || encTitle;
+    })();
     var link_arr = document.getElementsByTagName("link");
-    for (var i = 0; i < link_arr.length; i++) {
-        if (link_arr[i].getAttribute('rel') === 'canonical') {
-            this.canonical = link_arr[i].href.substring(0, link_arr[i].href.indexOf("#!") ) || link_arr[i].href;
+    for (var i = 0, j = link_arr.length; i < j; i++) {
+        var itm = link_arr[i];
+        if (itm.getAttribute('rel') === 'canonical') {
+            this.canonical = itm.href.substring(0, itm.href.indexOf("#!") ) || itm.href;
         }
     }
     // About object is returned if there is no 'id' parameter
@@ -78,11 +83,12 @@ function p(id) {
             id = id.substring(1);
             this.id = id;
             var elements = document.getElementsByTagName('*');
-            for (var i = 0; i < elements.length; i++) {
-                if (elements[i].getAttribute('page')) {
+            for (var i = 0, j = elements.length; i < j; i++) {
+                var itm = elements[i];
+                if (itm.getAttribute('page')) {
                     // return element when found with attribute page matching id.
-                    if (elements[i].getAttribute('page') === id) {
-                        this.ele = elements[i];
+                    if (itm.getAttribute('page') === id) {
+                        this.ele = itm;
                         i = elements.length;
                         return this;
                     }
@@ -165,22 +171,21 @@ p.prototype = {
         }
     },
     toggle: function () {
+        var _toggle = function (obj) {
+            if (obj.style.display !== 'none') {
+                obj.style.display = 'none';
+            } else {
+                obj.style.display = 'inherit';
+            }
+        };
         if (typeof this.ele !== 'undefined' && this.ele !== null) {
             if (typeof this.ele[1] !== 'undefined' && this.ele[1] !== null) {
                 for (var i = 0, len = this.ele.length; i < len; ++i) {
-                    if (this.ele[i].style.display !== 'none') {
-                        this.ele[i].style.display = 'none';
-                    } else {
-                        this.ele[i].style.display = 'inherit';
-                    }
+                    _toggle(this.ele[i]);
                 }
                 return this;
             } else {
-                if (this.ele.style.display !== 'none') {
-                    this.ele.style.display = 'none';
-                } else {
-                    this.ele.style.display = 'inherit';
-                }
+                _toggle(this.ele);
                 return this;
             }
         } else {
@@ -188,15 +193,18 @@ p.prototype = {
         }
     },
     trim: function () {
+        var _trim = function (obj) {
+            return obj.replace(/^\s\s*/, '').replace(/\s\s*$/, '');
+        };
         if (typeof this.ele !== 'undefined' && this.ele !== null) {
             if (typeof this.ele[1] !== 'undefined' && this.ele[1] !== null) {
                 console.log('PagesJS: method available for unique selectors only.');
                 return false;
             }
             if (typeof this.ele.value === "string") {
-                return this.ele.value.replace(/^\s\s*/, '').replace(/\s\s*$/, '');
+                return _trim(this.ele.value);
             } else if (typeof this.ele.innerHTML === "string") {
-                return this.ele.innerHTML.replace(/^\s\s*/, '').replace(/\s\s*$/, '');
+                return _trim(this.ele.innerHTML);
             } else {
                 return false;
             }
@@ -205,15 +213,18 @@ p.prototype = {
         }
     },
     ltrim: function () {
+        var _ltrim = function (obj) {
+            return obj.replace(/\s+$/, '');
+        };
         if (typeof this.ele !== 'undefined' && this.ele !== null) {
             if (typeof this.ele[1] !== 'undefined' && this.ele[1] !== null) {
                 console.log('PagesJS: method available for unique selectors only.');
                 return false;
             }
             if (typeof this.ele.value === "string") {
-                return this.ele.value.replace(/\s+$/, '');
+                return _ltrim(this.ele.value);
             } else if (typeof this.ele.innerHTML === "string") {
-                return this.ele.innerHTML.replace(/\s+$/, '');
+                return _ltrim(this.ele.innerHTML);
             } else {
                 return false;
             }
@@ -222,15 +233,18 @@ p.prototype = {
         }
     },
     rtrim: function () {
+        var _rtrim = function (obj) {
+            return obj.replace(/^\s+/, '');
+        };
         if (typeof this.ele !== 'undefined' && this.ele !== null) {
             if (typeof this.ele[1] !== 'undefined' && this.ele[1] !== null) {
                 console.log('PagesJS: method available for unique selectors only.');
                 return false;
             }
             if (typeof this.ele.value === "string") {
-                return this.ele.value.replace(/^\s+/, '');
+                return _rtrim(this.ele.value);
             } else if (typeof this.ele.innerHTML === "string") {
-                return this.ele.innerHTML.replace(/^\s+/, '');
+                return _rtrim(this.ele.innerHTML);
             } else {
                 return false;
             }
@@ -239,6 +253,11 @@ p.prototype = {
         }
     },
     clear: function (start, end) {
+        var _clear = function (obj) {
+            var index1 = obj.indexOf(start);
+            var index2 = obj.indexOf(end);
+            return obj.slice(0, index1) + obj.slice(index2 + 1);
+        };
         if (typeof this.ele !== 'undefined' && this.ele !== null) {
             if (typeof this.ele[1] !== 'undefined' && this.ele[1] !== null) {
                 console.log('PagesJS: method available for unique selectors only.');
@@ -247,11 +266,9 @@ p.prototype = {
             if (typeof this.ele.value === "string") {
                 var index1 = this.ele.value.indexOf(start);
                 var index2 = this.ele.value.indexOf(end);
-                return this.ele.value.slice(0, index1) + this.ele.value.slice(index2 + 1);
+                return _clear(this.ele.value);
             } else if (typeof this.ele.innerHTML === "string") {
-                var index1 = this.ele.innerHTML.indexOf(start);
-                var index2 = this.ele.innerHTML.indexOf(end);
-                return this.ele.innerHTML.slice(0, index1) + this.ele.innerHTML.slice(index2 + 1);
+                return _clear(this.ele.innerHTML);
             } else {
                 return false;
             }
@@ -294,19 +311,20 @@ p.prototype = {
         }
     },
     camelCase: function () {
+        var _camelCase = function (obj) {
+            return obj.replace(/\W+(.)/g, function (match, letter) {
+                return letter.toUpperCase();
+            });
+        };
         if (typeof this.ele !== 'undefined' && this.ele !== null) {
             if (typeof this.ele[1] !== 'undefined' && this.ele[1] !== null) {
                 console.log('PagesJS: method available for unique selectors only.');
                 return false;
             }
             if (typeof this.ele.value === "string") {
-                return this.ele.value.replace(/\W+(.)/g, function (match, letter) {
-                    return letter.toUpperCase();
-                });
+                return _camelCase(this.ele.value);
             } else if (typeof this.ele.innerHTML === "string") {
-                return this.ele.innerHTML.replace(/\W+(.)/g, function (match, letter) {
-                    return letter.toUpperCase();
-                });
+                return _camelCase(this.ele.innerHTML);
             } else {
                 return false;
             }
@@ -315,19 +333,20 @@ p.prototype = {
         }
     },
     inverse: function () {
+        var _inverse = function (obj) {
+            return obj.replace(/([a-z]+)|([A-Z]+)/g, function (match, lower, upper) {
+                return lower ? match.toUpperCase() : match.toLowerCase();
+            });
+        };
         if (typeof this.ele !== 'undefined' && this.ele !== null) {
             if (typeof this.ele[1] !== 'undefined' && this.ele[1] !== null) {
                 console.log('PagesJS: method available for unique selectors only.');
                 return false;
             }
             if (typeof this.ele.value === "string") {
-                return this.ele.value.replace(/([a-z]+)|([A-Z]+)/g, function (match, lower, upper) {
-                    return lower ? match.toUpperCase() : match.toLowerCase();
-                });
+                return _inverse(this.ele.value);
             } else if (typeof this.ele.innerHTML === "string") {
-                return this.ele.innerHTML.replace(/([a-z]+)|([A-Z]+)/g, function (match, lower, upper) {
-                    return lower ? match.toUpperCase() : match.toLowerCase();
-                });
+                return _inverse(this.ele.innerHTML);
             } else {
                 return false;
             }
@@ -336,24 +355,26 @@ p.prototype = {
         }
     },
     capitalize: function (a) {
+        var all;
         if (typeof a === 'undefined' && a === null) {
-            var all = false;
+            all = false;
         } else {
-            var all = a;
+            all = a;
         }
+        var _capitalize = function (obj) {
+            return all ? obj.replace(/\w+/g, function (word) {
+                return word.charAt(0).toUpperCase() + word.substring(1).toLowerCase();
+            }) : obj.charAt(0).toUpperCase() + obj.substring(1).toLowerCase();
+        };
         if (typeof this.ele !== 'undefined' && this.ele !== null) {
             if (typeof this.ele[1] !== 'undefined' && this.ele[1] !== null) {
                 console.log('PagesJS: method available for unique selectors only.');
                 return false;
             }
             if (typeof this.ele.value === "string") {
-                return all ? this.ele.value.replace(/\w+/g, function (word) {
-                    return word.charAt(0).toUpperCase() + word.substring(1).toLowerCase();
-                }) : this.ele.value.charAt(0).toUpperCase() + this.ele.value.substring(1).toLowerCase();
+                return _capitalize(this.ele.value);
             } else if (typeof this.ele.innerHTML === "string") {
-                return all ? this.ele.innerHTML.replace(/\w+/g, function (word) {
-                    return word.charAt(0).toUpperCase() + word.substring(1).toLowerCase();
-                }) : this.ele.innerHTML.charAt(0).toUpperCase() + this.ele.innerHTML.substring(1).toLowerCase();
+                return _capitalize(this.ele.innerHTML);
             } else {
                 return false;
             }
@@ -362,32 +383,28 @@ p.prototype = {
         }
     },
     disable: function () {
+        var _disable = function (obj) {
+            obj.disabled = true;
+        },
+        _disableByTagName = function (tagName) {
+            var eles = this.ele.getElementsByTagName(tagName);
+            for (var i = eles.length; i--;) {
+                _disable(eles[i]);
+            }
+        };
         if (typeof this.ele !== 'undefined' && this.ele !== null) {
             if (typeof this.ele[1] !== 'undefined' && this.ele[1] !== null) {
                 console.log('PagesJS: method available for unique selectors only.');
                 return false;
             }
             if ((this.ele.tagName && this.ele.tagName.toLowerCase() === "textarea") || (this.ele.tagName && this.ele.tagName.toLowerCase() === "input" && this.ele.type.toLowerCase() === "text")) {
-                this.ele.disabled = true;
+                _disable(this.ele);
                 return this;
             } else {
-                var inputs = this.ele.getElementsByTagName("input");
-                var i = 0;
-                for (i = 0; i < inputs.length; i++) {
-                    inputs[i].disabled = true;
-                }
-                var selects = this.ele.getElementsByTagName("select");
-                for (i = 0; i < selects.length; i++) {
-                    selects[i].disabled = true;
-                }
-                var textareas = this.ele.getElementsByTagName("textarea");
-                for (i = 0; i < textareas.length; i++) {
-                    textareas[i].disabled = true;
-                }
-                var buttons = this.ele.getElementsByTagName("button");
-                for (i = 0; i < buttons.length; i++) {
-                    buttons[i].disabled = true;
-                }
+                _disableByTagName("input");
+                _disableByTagName("select");
+                _disableByTagName("textarea");
+                _disableByTagName("button");
                 return this;
             }
         } else {
@@ -395,32 +412,28 @@ p.prototype = {
         }
     },
     enable: function () {
+        var _enable = function (obj) {
+            obj.disabled = false;
+        },
+        _enableByTagName = function (tagName) {
+            var eles = this.ele.getElementsByTagName(tagName);
+            for (var i = eles.length; i--;) {
+                _enable(eles[i]);
+            }
+        };
         if (typeof this.ele !== 'undefined' && this.ele !== null) {
             if (typeof this.ele[1] !== 'undefined' && this.ele[1] !== null) {
                 console.log('PagesJS: method available for unique selectors only.');
                 return false;
             }
             if ((this.ele.tagName && this.ele.tagName.toLowerCase() === "textarea") || (this.ele.tagName && this.ele.tagName.toLowerCase() === "input" && this.ele.type.toLowerCase() === "text")) {
-                this.ele.disabled = false;
+                _enable(this.ele);
                 return this;
             } else {
-                var inputs = this.ele.getElementsByTagName("input");
-                var i = 0;
-                for (i = 0; i < inputs.length; i++) {
-                    inputs[i].disabled = false;
-                }
-                var selects = this.ele.getElementsByTagName("select");
-                for (i = 0; i < selects.length; i++) {
-                    selects[i].disabled = false;
-                }
-                var textareas = this.ele.getElementsByTagName("textarea");
-                for (i = 0; i < textareas.length; i++) {
-                    textareas[i].disabled = false;
-                }
-                var buttons = this.ele.getElementsByTagName("button");
-                for (i = 0; i < buttons.length; i++) {
-                    buttons[i].disabled = false;
-                }
+                _enableByTagName("input");
+                _enableByTagName("select");
+                _enableByTagName("textarea");
+                _enableByTagName("button");
                 return this;
             }
         } else {
@@ -428,26 +441,25 @@ p.prototype = {
         }
     },
     stringify: function (obj) {
+        var val;
         if (typeof this.ele[1] !== 'undefined' && this.ele[1] !== null) {
             console.log('PagesJS: method available for unique selectors only.');
             return false;
         }
         if (obj && typeof obj === 'object') {
             if (window.JSON && window.JSON.stringify) {
+                val = function (objRef) {
+                    return window.JSON.stringify(objRef, function (key, value) {
+                        if (typeof value === 'number' && !isFinite(value)) {
+                            return String(value);
+                        }
+                        return value;
+                    });
+                };
                 if ((this.ele.tagName && this.ele.tagName.toLowerCase() === "textarea") || (this.ele.tagName && this.ele.tagName.toLowerCase() === "input" && this.ele.type.toLowerCase() === "text")) {
-                    this.ele.value = window.JSON.stringify(obj, function (key, value) {
-                        if (typeof value === 'number' && !isFinite(value)) {
-                            return String(value);
-                        }
-                        return value;
-                    });
+                    this.ele.value = val;
                 } else {
-                    this.ele.innerHTML = windowJSON.stringify(obj, function (key, value) {
-                        if (typeof value === 'number' && !isFinite(value)) {
-                            return String(value);
-                        }
-                        return value;
-                    });
+                    this.ele.innerHTML = val;
                 }
                 return this;
             } else {
@@ -575,7 +587,7 @@ p.prototype = {
             var className = "";
             var len, i = 0;
             if (typeof classes !== "string") {
-                for (i = 0; i < classes.length; i++) {
+                for (i = classes.length; i--;) {
                     className += " " + classes[i];
                 }
             } else {
@@ -595,32 +607,28 @@ p.prototype = {
         }
     },
     removeClass: function (remClass) {
+        var _removeClass = (function () {
+            if (typeof remClass === 'undefined' || this.ele === null) {
+                return function (obj) {
+                    obj.className = "";
+                };
+            }
+            return function (obj) {
+                while ((' ' + obj.className + ' ').indexOf(' ' + remClass + ' ') > -1) {
+                    obj.className = obj.className.replace(new RegExp('\\b' + remClass + '\\b'), '');
+                }
+            };
+        })();
         if (typeof this.ele !== 'undefined' && this.ele !== null) {
             var len, i = 0;
-            if (typeof remClass === 'undefined' || this.ele === null) {
-                if (typeof this.ele[1] !== 'undefined' && this.ele[1] !== null) {
-                    for (i = 0, len = this.ele.length; i < len; ++i) {
-                        this.ele[i].className = "";
-                    }
-                    return this;
-                } else {
-                    this.ele.className = "";
-                    return this;
+            if (typeof this.ele[1] !== 'undefined' && this.ele[1] !== null) {
+                for (i = 0, len = this.ele.length; i < len; ++i) {
+                    _removeClass(this.ele[i]);
                 }
+                return this;
             } else {
-                if (typeof this.ele[1] !== 'undefined' && this.ele[1] !== null) {
-                    for (i = 0, len = this.ele.length; i < len; ++i) {
-                        while ((' ' + this.ele[i].className + ' ').indexOf(' ' + remClass + ' ') > -1) {
-                            this.ele[i].className = this.ele[i].className.replace(new RegExp('\\b' + remClass + '\\b'), '');
-                        }
-                    }
-                    return this;
-                } else {
-                    while ((' ' + this.ele.className + ' ').indexOf(' ' + remClass + ' ') > -1) {
-                        this.ele.className = this.ele.className.replace(new RegExp('\\b' + remClass + '\\b'), '');
-                    }
-                    return this;
-                }
+                _removeClass(this.ele);
+                return this;
             }
         } else {
             return false;
@@ -628,8 +636,10 @@ p.prototype = {
     },
     hasClass: function (c) {
         if (typeof this.ele !== 'undefined' && this.ele !== null) {
-            var r = true, e = this.ele.className.split(' '); c = c.split(' ');
-            for(var i=0; i<c.length; i++)
+            var r = true, 
+                e = this.ele.className.split(' '); 
+            c = c.split(' ');
+            for(var i=c.length; i--;)
                 if(e.indexOf(c[i])===-1)
                 r = false;
             return r;
@@ -740,16 +750,20 @@ p.prototype = {
         }
     },
     nav: function (obj, callback) {
+        var titleEle = document.getElementsByTagName('title')[0],
+            canonicalStr = this.canonical + "#!" + this.id,
+            pipeId = " | " + this.id;
         //navigate
         if (typeof this.ele !== 'undefined' && this.ele !== null && this.ele.hasAttribute('page')) {
             var elements = document.getElementsByTagName('*');
-            var i = 0;
-            for (i = 0; i < elements.length; i++) {
-                if (elements[i].getAttribute('page')) {
-                    if (elements[i].getAttribute('page') === this.id) {
-                        elements[i].style.display = 'inherit';
+            var i = 0,len;
+            for (i = 0, len = elements.length; i < len; i++) {
+                var itm = elements[i];
+                if (itm.getAttribute('page')) {
+                    if (itm.getAttribute('page') === this.id) {
+                        itm.style.display = 'inherit';
                     } else {
-                        elements[i].style.display = 'none';
+                        itm.style.display = 'none';
                     }
                 }
             }
@@ -758,33 +772,33 @@ p.prototype = {
             // was a title given
             if ( typeof obj === 'object' && typeof obj.title !== 'undefined' ) {
                 //title legacy: this is not currently supported by any major browsers.
-                document.getElementsByTagName('title')[0].innerHTML = obj.title;
+                titleEle.innerHTML = obj.title;
                 window.history.pushState({
                     page: this.id
-                }, obj.title, this.canonical + "#!" + this.id );                
+                }, obj.title, canonicalStr );                
             } else {
                 // is there a page-title attribute
                 if (this.ele.hasAttribute('page-title')) {
                     //title legacy: this is not currently supported by any major browsers.
-                    document.getElementsByTagName('title')[0].innerHTML = this.ele.getAttribute('page-title');
+                    titleEle.innerHTML = this.ele.getAttribute('page-title');
                     window.history.pushState({
                         page: this.id
-                    }, this.ele.getAttribute('page-title'), this.canonical + "#!" + this.id );                
+                    }, this.ele.getAttribute('page-title'), canonicalStr );                
                 } else {
                     // is there an orriginal page title to prepend
                     if (typeof window.meta === 'object' && typeof window.meta.title !== 'undefined') {
                         //title legacy: this is not currently supported by any major browsers.
-                        document.getElementsByTagName('title')[0].innerHTML = window.meta.title + " | " + this.id;
+                        titleEle.innerHTML = window.meta.title + pipeId;
                         window.history.pushState({
                             page: this.id
-                        }, window.meta.title + " | " + this.id, this.canonical + "#!" + this.id );                
+                        }, window.meta.title + pipeId, canonicalStr );                
                     } else { 
                         // prepend the current page title
                         //title legacy: this is not currently supported by any major browsers.
-                        document.getElementsByTagName('title')[0].innerHTML = this.page_title + " | " + this.id;
+                        titleEle.innerHTML = this.page_title + pipeId;
                         window.history.pushState({
                             page: this.id
-                        }, this.page_title + " | " + this.id, this.canonical + "#!" + this.id );                
+                        }, this.page_title + pipeId, canonicalStr );                
                     }
                 }
             }
@@ -792,27 +806,28 @@ p.prototype = {
             // update Title
             // was a title given
             if ( typeof obj === 'object' && typeof obj.title !== 'undefined' ) {
-                document.getElementsByTagName('title')[0].innerHTML = obj.title;
+                titleEle.innerHTML = obj.title;
             } else {
                 // is there a page-title attribute
                 if (this.ele.hasAttribute('page-title')) {
-                    document.getElementsByTagName('title')[0].innerHTML = this.ele.getAttribute('page-title');
+                    titleEle.innerHTML = this.ele.getAttribute('page-title');
                 } else {
                     // is there an orriginal page title to prepend
                     if (typeof window.meta === 'object' && typeof window.meta.title !== 'undefined') {
-                        document.getElementsByTagName('title')[0].innerHTML = window.meta.title + " | " + this.id;
+                        titleEle.innerHTML = window.meta.title + pipeId;
                     } else { 
                         // prepend the current page title
-                        document.getElementsByTagName('title')[0].innerHTML = this.page_title + " | " + this.id;
+                        titleEle.innerHTML = this.page_title + pipeId;
                     }
                 }
             }
         }
             // Update canonical
             var link_arr = document.getElementsByTagName("link");
-            for (i = 0; i < link_arr.length; i++) {
-                if (link_arr[i].getAttribute('rel') === 'canonical') {
-                    link_arr[i].href = this.canonical + "#!" + this.id;
+            for (i = 0, len = link_arr.length; i < len; i++) {
+                var itm = link_arr[i];
+                if (itm.getAttribute('rel') === 'canonical') {
+                    itm.href = canonicalStr;
                 }
             }
             // Inform Google Analytics of the change
@@ -826,7 +841,7 @@ p.prototype = {
             }
             if (typeof callback !== 'undefined') {
                 var self = this;
-                return callback( { page: self.id, title: document.getElementsByTagName('title')[0].innerHTML, node: self.ele } );
+                return callback( { page: self.id, title: titleEle.innerHTML, node: self.ele } );
             } else {
                 return this;
             }
