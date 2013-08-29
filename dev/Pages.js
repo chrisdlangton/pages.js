@@ -3,7 +3,7 @@
  *                      As PagesJS evolved it aimed to solve the common problems associated with writing this new style of application. It became clear early on that PagesJS was well suited for building simple single page applications without the requirement of heavier libraries such as jQuery to perform simple DOM related functions.
  *
  * @author  Christopher D. Langton chris@codewiz.biz
- * @version     1.1
+ * @version     1.2
  */
 //	pagesJS selector
 function p(id) {
@@ -47,11 +47,11 @@ function p(id) {
     // About object is returned if there is no 'id' parameter
     var about = {
         Library: "PagesJS",
-        Version: 1.1,
+        Version: 1.2,
         Author: "Christopher D. Langton",
         Website: "http:\/\/chrisdlangton.com",
         Created: "2013-02-03",
-        Updated: "2013-02-22"
+        Updated: "2013-08-29"
     };
     if (id) {
         // return a new page object if we're in the window scope
