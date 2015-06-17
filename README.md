@@ -60,7 +60,7 @@ PagesJS will listen for the browser onhashchange event if it is supported (FF3.6
 
 ## Installation:
 
-Download the latest PagesJS or Pages.min.js file from this repository or from [chrisdlangton.com][2] and upload it to  your public javascripts directory. 
+Download the latest PagesJS or Pages.min.js file from this repository and upload it to your public javascripts directory. 
 
 Include the script in your html body after all the content (at the bottom of the body element) like so;
 
